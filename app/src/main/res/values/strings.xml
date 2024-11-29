@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Literify</string>
+
+    <string name="search">Cari Buku</string>
+    <string name="sign_in">Masuk</string>
+    <string name="sign_up">Registrasi</string>
+    <string name="password">Kata Sandi</string>
+    <string name="forgot_password">Lupa Kata Sandi?</string>
+
+    <string name="navbar_home">Beranda</string>
+    <string name="navbar_explore">Eksplor</string>
+    <string name="navbar_profile">Profil</string>
+
+    <string name="title_your_personalized">Personalisasi Anda</string>
+    <string name="title_most_reading">Paling Banyak Dibaca Bulan Ini</string>
+    <string name="title_most_authors">Penulis Terbanyak Bulan Ini</string>
+
+    <string name="body_identifier">Nama Pengguna / Email / Nomor Ponsel</string>
+    <string name="body_from_your_goals">Dari Sasaranmu</string>
+    <string name="body_most_genre">Genre yang Paling Sering Dibaca</string>
+    <string name="body_sign_in_to_your_account">Masuk ke Akun Anda</string>
+    <string name="body_signin_instructions">Login dengan ID dan Kata Sandi</string>
+    <string name="body_or">Atau</string>
+    <string name="body_no_account">Tidak punya akun?</string>
+
+</resources>

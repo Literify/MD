@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginEnd="18dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="@android:color/transparent" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="130dp"
+            android:radius="8dp"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_bold"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="Book Title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:textSize="12sp"
+            android:fontFamily="@font/inter"
+            android:textColor="@color/neutral_700"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="Author Name" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
