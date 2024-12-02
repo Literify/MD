@@ -10,21 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/materialToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:menu="@menu/toolbar_menu"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <com.google.android.material.search.SearchBar
             android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/search"
-            app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.search.SearchView
             android:id="@+id/searchView"
