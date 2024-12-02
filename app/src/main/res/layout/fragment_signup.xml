@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_bold"
                     android:gravity="center"
-                    android:text="@string/body_getting_started"
+                    android:text="@string/title_getting_started"
                     android:textColor="@color/black"
                     android:textSize="32sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -52,14 +52,13 @@
                     android:textColor="@color/neutral_700"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.504"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_first_name"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:hint="@string/first_name"
                     app:boxBackgroundColor="@color/white"
@@ -81,8 +80,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_last_name"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="14dp"
                     android:hint="@string/last_name"
                     app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="12dp"
@@ -103,8 +102,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_email"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="14dp"
                     android:hint="@string/email"
                     app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="12dp"
@@ -119,14 +118,15 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
                         android:textSize="12sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_password"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="14dp"
                     android:hint="@string/password"
                     app:boxBackgroundColor="@color/white"
                     app:boxCornerRadiusBottomEnd="12dp"
@@ -148,17 +148,32 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <Button
-            android:id="@+id/button_signin"
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="24dp"
-            android:fontFamily="@font/inter_semibold"
-            tools:text="@string/sign_up"
-            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView3" />
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView3" >
+
+            <Button
+                android:id="@+id/button_signup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/sign_up"
+                android:textColor="@color/white" />
+
+            <ProgressBar
+                android:id="@+id/progress_signup"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                style="@style/Widget.AppCompat.ProgressBar" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/textView4"
@@ -171,23 +186,37 @@
             android:fontFamily="@font/inter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_signin" />
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
-        <Button
-            android:id="@+id/button_signin_google"
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="@string/sign_up_with_google"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:backgroundTint="@color/white"
-            app:icon="@drawable/ic_google"
-            app:iconGravity="textStart"
-            app:iconSize="20dp"
-            app:iconTint="@null"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toBottomOf="@+id/textView4" >
+
+            <Button
+                android:id="@+id/button_signup_google"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/sign_up_with_google"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:backgroundTint="@color/white"
+                app:icon="@drawable/ic_google"
+                app:iconGravity="textStart"
+                app:iconSize="20dp"
+                app:iconTint="@null" />
+
+            <ProgressBar
+                android:id="@+id/progress_signup_google"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                style="@style/Widget.AppCompat.ProgressBar" />
+        </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

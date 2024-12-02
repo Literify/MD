@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:fontFamily="@font/inter_bold"
-                    android:text="@string/body_sign_in_msg"
+                    android:text="@string/title_sign_in_msg"
                     android:textSize="32sp"
                     android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +69,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_id"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="20dp"
                     android:hint="@string/body_identifier"
                     app:boxStrokeWidth="0dp"
@@ -91,8 +91,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_password"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="14dp"
                     android:hint="@string/password"
                     app:boxStrokeWidth="0dp"
                     app:boxCornerRadiusTopStart="12dp"
@@ -127,23 +127,36 @@
                     android:textSize="10sp"
                     android:textAllCaps="false"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.502"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/input_password" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <Button
-            android:id="@+id/button_signin"
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="24dp"
-            android:fontFamily="@font/inter_semibold"
-            tools:text="@string/sign_in"
-            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView3" />
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView3" >
+
+            <Button
+                android:id="@+id/button_signin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/sign_in"
+                android:textColor="@color/white" />
+
+            <ProgressBar
+                android:id="@+id/progress_signin"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                style="@style/Widget.AppCompat.ProgressBar" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/textView4"
@@ -156,25 +169,38 @@
             android:fontFamily="@font/inter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_signin" />
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
-        <Button
-            android:id="@+id/button_signin_google"
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/roboto_medium"
-            android:text="@string/sign_in_with_google"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:backgroundTint="@color/white"
-            app:icon="@drawable/ic_google"
-            app:iconGravity="textStart"
-            app:iconSize="20dp"
-            app:iconTint="@null"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            tools:text="Sign in with Google" />
+            app:layout_constraintTop_toBottomOf="@+id/textView4" >
+
+            <Button
+                android:id="@+id/button_signin_google"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/sign_in_with_google"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:backgroundTint="@color/white"
+                app:icon="@drawable/ic_google"
+                app:iconGravity="textStart"
+                app:iconSize="20dp"
+                app:iconTint="@null" />
+
+            <ProgressBar
+                android:id="@+id/progress_signin_google"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                style="@style/Widget.AppCompat.ProgressBar" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -182,7 +208,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_signin_google">
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
 
             <TextView
                 android:id="@+id/textView5"

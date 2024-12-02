@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Literify</string>
 
+    <string name="header">Judul</string>
+    <string name="body">Teks</string>
+    <string name="hint">Petunjuk</string>
+    <string name="next">Lanjut</string>
     <string name="search">Cari Buku</string>
     <string name="sign_in">Masuk</string>
     <string name="sign_up">Registrasi</string>
@@ -19,15 +23,17 @@
     <string name="title_your_personalized">Personalisasi Anda</string>
     <string name="title_most_reading">Paling Banyak Dibaca Bulan Ini</string>
     <string name="title_most_authors">Penulis Terbanyak Bulan Ini</string>
+    <string name="title_find_account">Temukan Akun Anda</string>
+    <string name="title_getting_started">Mari Memulai</string>
+    <string name="title_sign_in_msg">Masuk ke Akun Anda</string>
 
     <string name="body_identifier">Nama Pengguna / Email / Nomor Ponsel</string>
     <string name="body_from_your_goals">Dari Sasaranmu</string>
     <string name="body_most_genre">Genre yang Paling Sering Dibaca</string>
-    <string name="body_sign_in_msg">Masuk ke Akun Anda</string>
     <string name="body_sign_in_instructions">Login dengan ID dan Kata Sandi</string>
     <string name="body_or">Atau</string>
     <string name="body_no_account">Tidak punya akun?</string>
-    <string name="body_getting_started">Mari Memulai</string>
     <string name="body_create_account_msg">Yuk, buat akun Anda di sini</string>
-
+    <string name="body_find_account_msg">Masukkan nama pengguna, email, atau nomor ponsel Anda.</string>
+    <string name="required">Wajib diisi!</string>
 </resources>

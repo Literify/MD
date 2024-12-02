@@ -9,10 +9,10 @@
     tools:context=".ui.activity.auth.AuthActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/nav_host_fragment"
+        android:id="@+id/nav_host_fragment_activity_auth"
         android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:navGraph="@navigation/auth_navigation"
         app:layout_constraintTop_toTopOf="parent"
