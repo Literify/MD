@@ -11,8 +11,35 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_signin" >
         <action
-            android:id="@+id/action_loginFragment_to_mobile_navigation"
-            app:destination="@id/mobile_navigation" />
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
     </fragment>
-    <include app:graph="@navigation/mobile_navigation" />
+
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.literify.ui.fragment.sign_up.SignupFragment"
+        android:label="fragment_signup"
+        tools:layout="@layout/fragment_signup" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.literify.ui.fragment.forgot_password.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" >
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <deepLink
+            android:id="@+id/deepLinkResetPassword"
+            app:uri="https://your-app-name.firebaseapp.com/resetPassword/*" />
+    </fragment>
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.literify.ui.activity.main.MainActivity"
+        android:label="MainActivity" />
 </navigation>

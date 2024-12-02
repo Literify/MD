@@ -22,4 +22,10 @@
         android:name="com.literify.ui.fragment.profile.ProfileFragment"
         android:label="@string/navbar_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <activity
+        android:id="@+id/navigation_auth"
+        android:name="com.literify.ui.activity.auth.AuthActivity"
+        android:label="activity_auth"
+        tools:layout="@layout/activity_auth" />
 </navigation>
