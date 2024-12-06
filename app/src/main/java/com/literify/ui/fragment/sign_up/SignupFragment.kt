@@ -1,15 +1,17 @@
 package com.literify.ui.fragment.sign_up
 
+import android.content.Intent
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.literify.R
 import com.literify.databinding.FragmentSignupBinding
+import com.literify.ui.activity.main.MainActivity
+import com.literify.ui.activity.main.MainActivity.Companion.EXTRA_SAVE_CREDENTIAL
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,63 +34,113 @@ class SignupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.apply {
-            buttonSignup.setOnClickListener {
-                val firstName = binding.inputFirstName.editText?.text.toString()
-                val lastName = binding.inputLastName.editText?.text.toString()
-                val email = binding.inputEmail.editText?.text.toString()
-                val password = binding.inputPassword.editText?.text.toString()
+        handleButtonClickListener()
+        setupObservers()
+    }
 
-                //  TODO : Implement confirmPassword
-                val confirmPassword = null
+    private fun handleButtonClickListener() {
+        binding.buttonSignup.setOnClickListener {
+            val firstName = binding.inputFirstName.editText?.text.toString()
+            val lastName = binding.inputLastName.editText?.text.toString()
+            val email = binding.inputEmail.editText?.text.toString()
+            val password = binding.inputPassword.editText?.text.toString()
+            val confirmPassword = binding.inputConfirmPassword.editText?.text.toString()
 
-                // TODO: Implement email & password validation
-                if (firstName.isNotEmpty() && lastName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
-                    viewModel.signup(firstName, lastName, email, password)
+            binding.apply {
+                inputFirstName.isErrorEnabled = false
+                inputLastName.isErrorEnabled = false
+                inputEmail.isErrorEnabled = false
+                inputPassword.isErrorEnabled = false
+                inputConfirmPassword.isErrorEnabled = false
+            }
+
+            if (!isEmailValid(email)) {
+                binding.inputEmail.error = getString(R.string.validation_error_email)
+            }
+
+            if (!isPasswordValid(password)) {
+                binding.inputPassword.error = getString(R.string.validation_error_password)
+            }
+
+            if (password != confirmPassword) {
+                binding.inputConfirmPassword.error =
+                    getString(R.string.validation_error_confirm_password)
+            }
+
+            val inputs = listOf(
+                binding.inputFirstName to firstName,
+                binding.inputLastName to lastName,
+                binding.inputEmail to email,
+                binding.inputPassword to password,
+                binding.inputConfirmPassword to confirmPassword
+            )
+
+            var isValid = true
+            inputs.forEach { (input, value) ->
+                if (value.isEmpty()) {
+                    input.error =
+                        "${input.hint.toString()} ${getString(R.string.validation_error_required)}"
+                    isValid = false
                 } else {
-                    binding.apply {
-                        inputFirstName.error = if (firstName.isEmpty()) getString(R.string.required) else null
-                        inputLastName.error = if (lastName.isEmpty()) getString(R.string.required) else null
-                        inputEmail.error = if (email.isEmpty()) getString(R.string.required) else null
-                        inputPassword.error = if (password.isEmpty()) getString(R.string.required) else null
-                    }
+                    input.error = null
                 }
             }
 
-            buttonSignupGoogle.setOnClickListener {
-                // TODO : Implement Google Sign-Up
+            if (isValid) {
+                viewModel.signup(firstName, lastName, email, password)
             }
         }
+    }
 
+    private fun setupObservers() {
         viewModel.signupState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is SignupState.Loading -> {
-                    binding.buttonSignup.apply {
-                        isEnabled = false
-                        text = ""
-                    }
-                    binding.progressSignup.visibility = View.VISIBLE
+                    showLoading(true)
                 }
                 is SignupState.Success -> {
-                    binding.buttonSignup.apply {
-                        isEnabled = true
-                        text = getString(R.string.sign_up)
-                    }
-                    binding.progressSignup.visibility = View.GONE
+                    showLoading(false)
 
-                    findNavController().navigate(R.id.mainActivity)
+                    if(state.user != null) {
+                        val intent = Intent(requireContext(), MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+                        val isEmailLogin = state.user.providerData.any { it.providerId == "password" }
+                        if (isEmailLogin) {
+                            intent.putExtra(EXTRA_SAVE_CREDENTIAL, true)
+                        }
+
+                        startActivity(intent)
+                        requireActivity().finish()
+                    }
                 }
                 is SignupState.Error -> {
-                    binding.buttonSignup.apply {
-                        isEnabled = true
-                        text = getString(R.string.sign_up)
-                    }
-                    binding.progressSignup.visibility = View.GONE
-
-                    // TODO: Show error message
-                    Snackbar.make(binding.root, state.message, Snackbar.LENGTH_SHORT).show()
+                    showLoading(false)
+                    showError(state.message)
                 }
             }
         }
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        return email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun isPasswordValid(password: String): Boolean {
+        return password.isNotEmpty() && password.length >= 6 && password.matches(".*[a-z].*".toRegex()) &&
+                password.matches(".*[A-Z].*".toRegex()) && password.matches(".*[0-9].*".toRegex())
+    }
+
+    private fun showLoading(show: Boolean) {
+        binding.buttonSignup.apply {
+            isEnabled = !show
+            text = if (!show) getString(R.string.sign_up) else ""
+        }
+        binding.progressSignup.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    private fun showError(message: String) {
+        // TODO: Show error message according to ui/ux plan
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 }

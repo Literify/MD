@@ -1,11 +1,12 @@
 package com.literify.ui.activity.auth
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.literify.R
 import com.literify.databinding.ActivityAuthBinding
+import com.literify.ui.activity.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,6 +23,11 @@ class AuthActivity : AppCompatActivity() {
 
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE
+        )
     }
 
     public override fun onStart() {
@@ -29,8 +35,11 @@ class AuthActivity : AppCompatActivity() {
 
         val currentUser = firebaseAuth.currentUser
         if (currentUser != null) {
-            val navController = findNavController(R.id.nav_host_fragment_activity_auth)
-            navController.navigate(R.id.mainActivity)
+            val intent = Intent(this, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            startActivity(intent)
+            finish()
         }
     }
 }

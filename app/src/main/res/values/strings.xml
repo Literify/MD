@@ -6,15 +6,22 @@
     <string name="hint">Petunjuk</string>
     <string name="next">Lanjut</string>
     <string name="search">Cari Buku</string>
+    <string name="id">ID</string>
     <string name="sign_in">Masuk</string>
     <string name="sign_up">Registrasi</string>
     <string name="password">Kata Sandi</string>
+    <string name="confirm_password">Konfirmasi Kata Sandi</string>
     <string name="forgot_password">Lupa Kata Sandi?</string>
     <string name="first_name">Nama Depan</string>
     <string name="last_name">Nama Belakang</string>
     <string name="email">Email</string>
     <string name="sign_in_with_google">Masuk dengan Google</string>
     <string name="sign_up_with_google">Daftar dengan Google</string>
+
+    <string name="validation_error_required">Diperlukan</string>
+    <string name="validation_error_email">Email tidak valid</string>
+    <string name="validation_error_password">Kata sandi harus memiliki minimal 8 karakter, termasuk huruf besar dan angka.</string>
+    <string name="validation_error_confirm_password">Konfirmasi kata sandi tidak cocok</string>
 
     <string name="navbar_home">Beranda</string>
     <string name="navbar_explore">Eksplor</string>
@@ -35,5 +42,6 @@
     <string name="body_no_account">Tidak punya akun?</string>
     <string name="body_create_account_msg">Yuk, buat akun Anda di sini</string>
     <string name="body_find_account_msg">Masukkan nama pengguna, email, atau nomor ponsel Anda.</string>
-    <string name="required">Wajib diisi!</string>
+
+    <string name="error_parsing_google_id">Terjadi kesalahan saat memproses token ID Google.</string>
 </resources>
