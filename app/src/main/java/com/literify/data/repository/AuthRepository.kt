@@ -16,7 +16,9 @@ class AuthRepository @Inject constructor(
     suspend fun loginWithEmailPassword(id: String, password: String): FirebaseUser {
         try {
             firebaseAuth.signInWithEmailAndPassword(id, password).await()
-            authPreferences.saveCredential(id, password)
+
+            authPreferences.setLoggedUser(id)
+            authPreferences.saveCredential(id, password, null)
 
             return firebaseAuth.currentUser ?: throw Exception("Login failed")
         } catch (e: Exception) {
@@ -35,6 +37,7 @@ class AuthRepository @Inject constructor(
         }
     }
 
+    // TODO: Implement Add User Data to Firestore
     suspend fun registerWithEmailPassword(
         firstName: String,
         lastName: String,
@@ -43,6 +46,9 @@ class AuthRepository @Inject constructor(
     ): FirebaseUser {
         try {
             firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+
+            authPreferences.setLoggedUser(email)
+            authPreferences.saveCredential(email, password, null)
 
             val user = firebaseAuth.currentUser!!
             val actionCodeSettings = ActionCodeSettings.newBuilder()

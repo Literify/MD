@@ -60,18 +60,20 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
+        saveCredentialPrompt()
+    }
+
+    private fun saveCredentialPrompt() {
         lifecycleScope.launch {
             val saveCredentialRequest =
                 intent.getBooleanExtra(EXTRA_SAVE_CREDENTIAL, false)
-            val isCredentialSavePrompted =
-                authPreferences.isCredentialSavePrompted().first()
 
-            if (saveCredentialRequest && !isCredentialSavePrompted) {
-                val credential  = authPreferences.getCredential().first()
-                credential?.let {
-                    val (id, password) = it.split(":")
-                    saveCredentialToCredentialManager(id, password)
-                }
+            val credential = authPreferences.getCredential().first()
+            val isCredentialSaved = credential?.isCredentialSavePrompted
+
+            if (saveCredentialRequest && credential != null && !isCredentialSaved!!) {
+                saveCredentialToCredentialManager(credential.id!!, credential.password!!)
+                authPreferences.saveCredential(credential.id, credential.password, true)
             }
         }
     }
@@ -84,12 +86,9 @@ class MainActivity : AppCompatActivity() {
                 request = createPasswordRequest
             )
 
-            authPreferences.setCredentialSavePrompted()
         } catch (e: Exception) {
             Log.e(TAG, "Failed to save credential", e)
-            authPreferences.setCredentialSavePrompted(false)
         }
-
     }
 
     companion object {

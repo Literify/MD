@@ -32,6 +32,7 @@ object Injection {
     }
 
     @Provides
+    @Singleton
     fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
         return context.dataStore
     }
