@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 import com.literify.R
 import com.literify.databinding.FragmentSignupBinding
@@ -34,60 +35,126 @@ class SignupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        handleButtonClickListener()
+        initializeUI()
         setupObservers()
     }
 
-    private fun handleButtonClickListener() {
-        binding.buttonSignup.setOnClickListener {
-            val firstName = binding.inputFirstName.editText?.text.toString()
-            val lastName = binding.inputLastName.editText?.text.toString()
-            val email = binding.inputEmail.editText?.text.toString()
-            val password = binding.inputPassword.editText?.text.toString()
-            val confirmPassword = binding.inputConfirmPassword.editText?.text.toString()
+    private fun initializeUI() {
+        val firstNameInput = binding.inputFirstName.editText
+        val lastNameInput = binding.inputLastName.editText
+        val emailInput = binding.inputEmail.editText
+        val passwordInput = binding.inputPassword.editText
+        val confirmPasswordInput = binding.inputConfirmPassword.editText
 
-            binding.apply {
-                inputFirstName.isErrorEnabled = false
-                inputLastName.isErrorEnabled = false
-                inputEmail.isErrorEnabled = false
-                inputPassword.isErrorEnabled = false
-                inputConfirmPassword.isErrorEnabled = false
-            }
+        binding.apply {
+            firstNameInput?.apply {
+                addTextChangedListener {
+                    inputFirstName.isErrorEnabled = false
+                }
 
-            if (!isEmailValid(email)) {
-                binding.inputEmail.error = getString(R.string.validation_error_email)
-            }
-
-            if (!isPasswordValid(password)) {
-                binding.inputPassword.error = getString(R.string.validation_error_password)
-            }
-
-            if (password != confirmPassword) {
-                binding.inputConfirmPassword.error =
-                    getString(R.string.validation_error_confirm_password)
-            }
-
-            val inputs = listOf(
-                binding.inputFirstName to firstName,
-                binding.inputLastName to lastName,
-                binding.inputEmail to email,
-                binding.inputPassword to password,
-                binding.inputConfirmPassword to confirmPassword
-            )
-
-            var isValid = true
-            inputs.forEach { (input, value) ->
-                if (value.isEmpty()) {
-                    input.error =
-                        "${input.hint.toString()} ${getString(R.string.validation_error_required)}"
-                    isValid = false
-                } else {
-                    input.error = null
+                setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus && text.isEmpty()) {
+                        inputFirstName.error =
+                            "${getString(R.string.first_name)} ${getString(R.string.validation_error_required)}"
+                    }
                 }
             }
 
-            if (isValid) {
-                viewModel.signup(firstName, lastName, email, password)
+            lastNameInput?.apply {
+                addTextChangedListener {
+                    inputLastName.isErrorEnabled = false
+                }
+
+                setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus && text.isEmpty()) {
+                        inputLastName.error =
+                            "${getString(R.string.last_name)} ${getString(R.string.validation_error_required)}"
+                    }
+                }
+            }
+
+            emailInput?.apply {
+                addTextChangedListener {
+                    inputEmail.isErrorEnabled = false
+                }
+
+                setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus) {
+                        if (!isEmailValid(text.toString())) {
+                            inputEmail.error = getString(R.string.validation_error_email)
+                        }
+
+                        if (text.isEmpty()) {
+                            inputEmail.error =
+                                "${getString(R.string.email)} ${getString(R.string.validation_error_required)}"
+                        }
+                    }
+                }
+            }
+
+            passwordInput?.apply {
+                addTextChangedListener {
+                    inputPassword.isErrorEnabled = false
+                }
+
+                setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus) {
+                        if (!isPasswordValid(text.toString())) {
+                            inputPassword.error = getString(R.string.validation_error_password)
+                        }
+
+                        if (text.isEmpty()) {
+                            inputPassword.error =
+                                "${getString(R.string.password)} ${getString(R.string.validation_error_required)}"
+                        }
+                    }
+                }
+            }
+
+            confirmPasswordInput?.apply {
+                val password = passwordInput?.text.toString()
+                val confirmPassword = text.toString()
+
+                addTextChangedListener {
+                    inputConfirmPassword.isErrorEnabled = false
+                }
+
+                setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus) {
+                        if (password != confirmPassword) {
+                            inputPassword.isErrorEnabled = true
+                            inputConfirmPassword.error = getString(R.string.validation_error_confirm_password)
+                        }
+
+                        if (confirmPassword.isEmpty()) {
+                            inputConfirmPassword.error =
+                                "${getString(R.string.confirm_password)} ${getString(R.string.validation_error_required)}"
+                        }
+                    }
+                }
+            }
+
+            buttonSignup.setOnClickListener {
+                val firstName = firstNameInput?.text.toString()
+                val lastName = lastNameInput?.text.toString()
+                val email = emailInput?.text.toString()
+                val password = passwordInput?.text.toString()
+
+                firstNameInput?.requestFocus()
+                lastNameInput?.requestFocus()
+                emailInput?.requestFocus()
+                passwordInput?.requestFocus()
+                confirmPasswordInput?.requestFocus()
+                confirmPasswordInput?.clearFocus()
+
+                val isNoError = !inputFirstName.isErrorEnabled && !inputLastName.isErrorEnabled &&
+                        !inputEmail.isErrorEnabled && !inputPassword.isErrorEnabled && !inputConfirmPassword.isErrorEnabled
+
+                if (isNoError) {
+                    viewModel.signup(firstName, lastName, email, password)
+                } else {
+                    showError(getString(R.string.validation_error_submit))
+                }
             }
         }
     }
@@ -139,8 +206,8 @@ class SignupFragment : Fragment() {
         binding.progressSignup.visibility = if (show) View.VISIBLE else View.GONE
     }
 
+    // TODO: Show error message according to ui/ux plan
     private fun showError(message: String) {
-        // TODO: Show error message according to ui/ux plan
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 }

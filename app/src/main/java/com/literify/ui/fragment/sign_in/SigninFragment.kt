@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
@@ -37,6 +38,8 @@ class SigninFragment : Fragment() {
 
     private val viewModel: SigninViewModel by viewModels()
 
+    private var isLoginInitialized = false
+
     @Inject
     lateinit var credentialManager: CredentialManager
 
@@ -52,14 +55,43 @@ class SigninFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        handleButtonClickListener()
+        initializeUI()
         setupObservers()
 
-        loginWithCredentialsManager()
+        if (!isLoginInitialized) {
+            loginWithCredentialsManager()
+            isLoginInitialized = true
+        }
     }
 
-    private fun handleButtonClickListener() {
+    private fun initializeUI() {
         binding.apply {
+            inputId.editText?.apply {
+                addTextChangedListener {
+                    inputId.isErrorEnabled = false
+                }
+
+                setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus && text.isEmpty()) {
+                        inputId.error =
+                            "${getString(R.string.body_identifier)} ${getString(R.string.validation_error_required)}"
+                    }
+                }
+            }
+
+            inputPassword.editText?.apply  {
+                addTextChangedListener {
+                    inputPassword.isErrorEnabled = false
+                }
+
+                setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus && text.isEmpty()) {
+                        inputPassword.error =
+                            "${getString(R.string.password)} ${getString(R.string.validation_error_required)}"
+                    }
+                }
+            }
+
             buttonSignin.setOnClickListener {
                 loginWithEmailPassword()
             }
@@ -141,7 +173,7 @@ class SigninFragment : Fragment() {
                                 viewModel.loginWithGoogleIdToken(googleIdTokenCredential.idToken)
                             } catch (e: GoogleIdTokenParsingException) {
                                 Log.e(TAG, "Failed to parse Google ID Token", e)
-                                showError(getString(R.string.error_parsing_google_id))
+                                showError(getString(R.string.error_default_msg))
                             }
                         }
                     }
@@ -155,20 +187,20 @@ class SigninFragment : Fragment() {
         val password = binding.inputPassword.editText?.text.toString()
 
         binding.apply {
-            inputId.isErrorEnabled = false
-            inputPassword.isErrorEnabled = false
+            inputId.editText?.requestFocus()
+            inputPassword.editText?.requestFocus()
+            inputPassword.editText?.clearFocus()
         }
 
-        if (identifier.isEmpty()) {
-            binding.inputId.error = "${getString(R.string.id)} ${getString(R.string.validation_error_required)}"
-        }
-
-        if (password.isEmpty()) {
-            binding.inputPassword.error = "${getString(R.string.password)} ${getString(R.string.validation_error_required)}"
-        }
-
-        if (identifier.isNotEmpty() && password.isNotEmpty()) {
+        val isNoError = !binding.inputId.isErrorEnabled && !binding.inputPassword.isErrorEnabled
+        val isEmailIdentifier = isEmailValid(identifier)
+        if (isNoError && isEmailIdentifier) {
             viewModel.loginWithPassword(identifier, password)
+        } else if (!isEmailIdentifier) {
+            // TODO: Implement Username/Phone Number Sign-In
+            showError(getString(R.string.validation_soon_identifier))
+        } else {
+            showError(getString(R.string.validation_error_submit))
         }
     }
 
@@ -190,6 +222,10 @@ class SigninFragment : Fragment() {
                 viewModel.loginWithGoogleIdToken(googleIdTokenCredential.idToken)
             } catch (_: Exception) { }
         }
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        return email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     private fun showLoading(show: Boolean, button: String? = null) {
@@ -235,8 +271,8 @@ class SigninFragment : Fragment() {
         }
     }
 
+    // TODO: Show error message according to ui/ux plan
     private fun showError(message: String) {
-        // TODO: Show error message according to ui/ux plan
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
