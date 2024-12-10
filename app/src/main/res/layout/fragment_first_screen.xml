@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.onboarding.screens.FirstScreen"
-    android:background="@drawable/backgorund_gradation">
+    android:background="@drawable/bg_gradation">
 
 
     <ImageView
