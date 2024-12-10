@@ -112,21 +112,17 @@ class SignupFragment : Fragment() {
             }
 
             confirmPasswordInput?.apply {
-                val password = passwordInput?.text.toString()
-                val confirmPassword = text.toString()
-
                 addTextChangedListener {
                     inputConfirmPassword.isErrorEnabled = false
                 }
 
                 setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus) {
-                        if (password != confirmPassword) {
-                            inputPassword.isErrorEnabled = true
+                        if (passwordInput?.text.toString() != text.toString()) {
                             inputConfirmPassword.error = getString(R.string.validation_error_confirm_password)
                         }
 
-                        if (confirmPassword.isEmpty()) {
+                        if (text.isEmpty()) {
                             inputConfirmPassword.error =
                                 "${getString(R.string.confirm_password)} ${getString(R.string.validation_error_required)}"
                         }
