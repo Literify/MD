@@ -5,6 +5,10 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
+    <deepLink
+        android:id="@+id/deepLink"
+        app:uri="https://proud-curve-441603-q5.firebaseapp.com/__/auth/action?mode={mode}&amp;oobCode={oobCode}" />
+
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.literify.ui.fragment.home.HomeFragment"
@@ -22,10 +26,4 @@
         android:name="com.literify.ui.fragment.profile.ProfileFragment"
         android:label="@string/navbar_profile"
         tools:layout="@layout/fragment_profile" />
-
-    <activity
-        android:id="@+id/navigation_auth"
-        android:name="com.literify.ui.activity.auth.AuthActivity"
-        android:label="activity_auth"
-        tools:layout="@layout/activity_auth" />
 </navigation>

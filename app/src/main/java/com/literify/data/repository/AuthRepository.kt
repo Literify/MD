@@ -1,6 +1,6 @@
 package com.literify.data.repository
 
-import com.google.firebase.auth.ActionCodeSettings
+import com.google.firebase.auth.ActionCodeResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -51,13 +51,53 @@ class AuthRepository @Inject constructor(
             authPreferences.saveCredential(email, password, null)
 
             val user = firebaseAuth.currentUser!!
-            val actionCodeSettings = ActionCodeSettings.newBuilder()
-                .setHandleCodeInApp(true)
-                .setAndroidPackageName("com.literify", false, null)
-                .build()
+            user.sendEmailVerification().await()
 
-            user.sendEmailVerification(actionCodeSettings).await()
             return firebaseAuth.currentUser ?: throw Exception("Register failed")
+        } catch (e: Exception) {
+            throw Exception(e.message)
+        }
+    }
+
+    // TODO: Implement Find Account with Username/Phone Number
+    suspend fun sendPasswordResetEmail(email: String) {
+        try {
+            firebaseAuth.sendPasswordResetEmail(email).await()
+        } catch (e: Exception) {
+            throw Exception(e.message)
+        }
+    }
+
+    suspend fun verifyOobCode(oobCode: String): ActionCodeResult? {
+        try {
+            return firebaseAuth.checkActionCode(oobCode).await()
+        } catch (e: Exception) {
+            throw Exception(e.message)
+        }
+    }
+
+    suspend fun confirmEmailVerification(oobCode: String) {
+        try {
+            firebaseAuth.applyActionCode(oobCode).await()
+        } catch (e: Exception) {
+            throw Exception(e.message)
+        }
+    }
+
+    suspend fun confirmPasswordReset(oobCode: String, newPassword: String) {
+        try {
+            firebaseAuth.confirmPasswordReset(oobCode, newPassword).await()
+        } catch (e: Exception) {
+            throw Exception(e.message)
+        }
+    }
+
+    suspend fun logout(): FirebaseUser {
+        try {
+            firebaseAuth.signOut()
+            authPreferences.clearLoggedUser()
+
+            return firebaseAuth.currentUser ?: throw Exception("Logout failed")
         } catch (e: Exception) {
             throw Exception(e.message)
         }

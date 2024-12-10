@@ -5,6 +5,7 @@
     <string name="body">Teks</string>
     <string name="hint">Petunjuk</string>
     <string name="next">Lanjut</string>
+    <string name="cancel">Batal</string>
     <string name="search">Cari Buku</string>
     <string name="id">ID</string>
     <string name="sign_in">Masuk</string>
@@ -17,6 +18,7 @@
     <string name="email">Email</string>
     <string name="sign_in_with_google">Masuk dengan Google</string>
     <string name="sign_up_with_google">Daftar dengan Google</string>
+    <string name="sign_out">Keluar</string>
 
     <string name="error_default_msg">Terjadi kesalahan, coba lagi nanti</string>
     <string name="validation_error_required">Diperlukan</string>
@@ -37,6 +39,7 @@
     <string name="title_your_personalized">Personalisasi Anda</string>
     <string name="title_most_reading">Paling Banyak Dibaca Bulan Ini</string>
     <string name="title_most_authors">Penulis Terbanyak Bulan Ini</string>
+    <string name="title_logout">Konfirmasi keluar</string>
 
     <string name="body_sign_in_instructions">Login dengan ID dan Kata Sandi</string>
     <string name="body_identifier">Nama Pengguna / Email / Nomor Ponsel</string>
@@ -44,8 +47,9 @@
     <string name="body_no_account">Tidak punya akun?</string>
     <string name="body_create_account_msg">Yuk, buat akun Anda di sini</string>
     <string name="body_find_account_msg">Masukkan nama pengguna, email, atau nomor ponsel Anda.</string>
+    <string name="body_reset_password_msg">Kami akan mengirimkan tautan ke email Anda untuk mereset kata sandi Anda.</string>
     <string name="body_create_password_msg">Buat kata sandi 8+ karakter dengan setidaknya 1 huruf besar, 1 huruf kecil, dan 1 angka.</string>
-
+    <string name="body_logout_msg">Anda harus keluar untuk melanjutkan reset password. Apakah Anda ingin keluar sekarang?</string>
     <string name="body_from_your_goals">Dari Sasaranmu</string>
     <string name="body_most_genre">Genre yang Paling Sering Dibaca</string>
 </resources>
