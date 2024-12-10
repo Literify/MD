@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.onboarding.screens.FirstScreen"
+    android:background="@drawable/backgorund_gradation">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/inter_medium"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="4sp"
+        android:text="@string/selamat_datang_di_literify"
+        android:textColor="@color/neutral_700"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="@string/tetapkan_pengingat_untuk_membaca_sesuai_kecepatan_anda_sendiri"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_view"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.335"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="onboarding3.lottie"
+        app:lottie_loop="true"
+        tools:ignore="MissingClass" />
+
+    <Button
+        android:id="@+id/buttonSignup"
+        android:layout_width="369dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="64dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Daftar"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonSignin"
+        android:layout_width="369dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Masuk"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSignup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

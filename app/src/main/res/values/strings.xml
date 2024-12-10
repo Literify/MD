@@ -52,4 +52,12 @@
     <string name="body_logout_msg">Anda harus keluar untuk melanjutkan reset password. Apakah Anda ingin keluar sekarang?</string>
     <string name="body_from_your_goals">Dari Sasaranmu</string>
     <string name="body_most_genre">Genre yang Paling Sering Dibaca</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mulai">Mulai</string>
+    <string name="temukan_buku_yang_sesuai_dengan_minat_anda">Temukan buku yang sesuai dengan minat Anda</string>
+    <string name="selamat_datang_di_literify">Selamat datang di Literify</string>
+    <string name="dapatkan_rekomendasi_buku_dari_pembaca_lain">Dapatkan rekomendasi buku dari pembaca lain.</string>
+    <string name="tetapkan_pengingat_untuk_membaca_sesuai_kecepatan_anda_sendiri">Tetapkan pengingat untuk membaca sesuai kecepatan Anda sendiri.</string>
+    <string name="berikutnya">Berikutnya</string>
 </resources>

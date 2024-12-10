@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.sign_up.SignupFragment"
-    tools:background="@color/primary_200" >
+    tools:background="@drawable/backgorund_gradation">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
