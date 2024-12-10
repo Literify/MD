@@ -6,7 +6,7 @@
     app:startDestination="@id/onboardingFragment ">
 
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/signinFragment"
         android:name="com.literify.ui.fragment.sign_in.SigninFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_signin" >
@@ -22,20 +22,13 @@
         android:id="@+id/signupFragment"
         android:name="com.literify.ui.fragment.sign_up.SignupFragment"
         android:label="fragment_signup"
-        tools:layout="@layout/fragment_signup" >
-    </fragment>
+        tools:layout="@layout/fragment_signup" />
 
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.literify.ui.fragment.forgot_password.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" >
-        <action
-            android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <deepLink
-            android:id="@+id/deepLinkResetPassword"
-            app:uri="https://your-app-name.firebaseapp.com/resetPassword/*" />
     </fragment>
 
     <activity
