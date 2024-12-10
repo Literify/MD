@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="Literify">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-12-08T07:11:27.707331300Z">
+        <DropdownSelection timestamp="2024-12-09T14:41:44.913228600Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Vian\.android\avd\Pixel_5_API_34.avd" />

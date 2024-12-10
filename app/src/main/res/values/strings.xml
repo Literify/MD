@@ -39,9 +39,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="mulai">Mulai</string>
-    <string name="temukan_buku_yang_sesuai_dengan_minat_anda">Temukan buku yang sesuai dengan minat Anda</string>
+    <string name="onboardingText2">Temukan buku yang sesuai dengan minat Anda</string>
     <string name="selamat_datang_di_literify">Selamat datang di Literify</string>
-    <string name="dapatkan_rekomendasi_buku_dari_pembaca_lain">Dapatkan rekomendasi buku dari pembaca lain.</string>
-    <string name="tetapkan_pengingat_untuk_membaca_sesuai_kecepatan_anda_sendiri">Tetapkan pengingat untuk membaca sesuai kecepatan Anda sendiri.</string>
+    <string name="onboardingText3">Dapatkan rekomendasi buku dari pembaca lain.</string>
+    <string name="oboardingText4">Tetapkan pengingat untuk membaca sesuai kecepatan Anda sendiri.</string>
     <string name="berikutnya">Berikutnya</string>
+    <string name="onboardingText1">Literify, aplikasi untuk menemukan buku dan mendapatkan rekomendasi yang tepat sesuai kebutuhan Anda.</string>
 </resources>

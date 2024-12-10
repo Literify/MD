@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
         android:fontFamily="@font/inter_bold"
-        android:text="@string/dapatkan_rekomendasi_buku_dari_pembaca_lain"
+        android:text="@string/onboardingText3"
         android:textColor="@color/black"
         android:textSize="24sp"
         tools:layout_editor_absoluteX="24dp"

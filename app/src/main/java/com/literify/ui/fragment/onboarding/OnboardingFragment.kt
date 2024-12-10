@@ -10,7 +10,6 @@ import com.literify.ui.fragment.onboarding.screens.FirstScreen
 import com.literify.ui.fragment.onboarding.screens.FourthScreen
 import com.literify.ui.fragment.onboarding.screens.SecondScreen
 import com.literify.ui.fragment.onboarding.screens.ThirdScreen
-import androidx.viewpager2.widget.ViewPager2
 
 class OnboardingFragment : Fragment() {
 
@@ -21,7 +20,7 @@ class OnboardingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Menggunakan View Binding
+
         _binding = FragmentOnboardingBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -32,7 +31,6 @@ class OnboardingFragment : Fragment() {
             FourthScreen()
         )
 
-        // Set adapter ke ViewPager
         val adapter = OnboardingAdapter(
             fragmentList,
             requireActivity().supportFragmentManager,

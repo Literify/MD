@@ -41,7 +41,7 @@
         android:layout_marginBottom="24dp"
         android:gravity="center_horizontal|top"
         android:lineSpacingExtra="3sp"
-        android:text="Literify, aplikasi untuk menemukan buku dan mendapatkan rekomendasi yang tepat sesuai kebutuhan Anda."
+        android:text="@string/onboardingText1"
         android:textColor="@color/neutral_100"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"

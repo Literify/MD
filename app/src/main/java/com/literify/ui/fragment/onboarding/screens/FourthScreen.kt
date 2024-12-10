@@ -33,6 +33,6 @@ class FourthScreen : Fragment() {
     }
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Pastikan binding null ketika view dihancurkan untuk menghindari memory leak
+        _binding = null
     }
 }
