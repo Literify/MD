@@ -4,30 +4,34 @@ import com.google.firebase.auth.ActionCodeResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.literify.R
 import com.literify.data.remote.model.UserPayload
 import com.literify.data.remote.retrofit.ApiService
 import com.literify.util.InputValidator.isEmailValid
+import com.literify.util.StringProvider
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val authPreferences: AuthPreferences,
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val string: StringProvider
 ) {
 
-    suspend fun loginWithEmailPassword(id: String, password: String): FirebaseUser {
+    suspend fun signinWithEmailPassword(id: String, password: String): FirebaseUser {
         var email = id
 
         try {
             if (!isEmailValid(email)) {
                 val response = apiService.getUserEmail(id)
                 if (response.isSuccessful) {
-                    email = response.body() ?: throw Exception("Email not found in response")
+                    email = response.body()
+                        ?: throw Exception(string.getString(R.string.error_account_mismatch))
                 } else {
                     when (response.code()) {
-                        404 -> throw Exception("Username $id not found")
-                        else -> throw Exception("Error fetching email: ${response.message()}")
+                        404 -> throw Exception(string.getString(R.string.error_account_mismatch))
+                        else -> throw Exception(string.getString(R.string.error_default))
                     }
                 }
             }
@@ -37,24 +41,25 @@ class AuthRepository @Inject constructor(
             authPreferences.setLoggedUser(id)
             authPreferences.saveCredential(id, password, null)
 
-            return firebaseAuth.currentUser ?: throw Exception("Login failed")
+            return firebaseAuth.currentUser ?: throw Exception(string.getString(R.string.error_default))
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
 
-    suspend fun loginWithGoogleIdToken(idToken: String?): FirebaseUser {
+    suspend fun signInWithGoogleIdToken(idToken: String?): FirebaseUser {
         try {
             val credential = GoogleAuthProvider.getCredential(idToken, null)
 
             firebaseAuth.signInWithCredential(credential).await()
-            return firebaseAuth.currentUser ?: throw Exception("Login with Google failed")
+            return firebaseAuth.currentUser
+                ?: throw Exception(string.getString(R.string.error_default))
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
 
-    suspend fun registerWithEmailPassword(
+    suspend fun signupWithEmailPassword(
         firstName: String,
         lastName: String,
         email: String,
@@ -78,13 +83,13 @@ class AuthRepository @Inject constructor(
             )
 
             if (!registerUser.isSuccessful) {
-                throw Exception("Failed to register user: ${registerUser.message()}")
+                throw Exception(string.getString(R.string.error_default))
             }
 
             val user = firebaseAuth.currentUser!!
             user.sendEmailVerification().await()
 
-            return firebaseAuth.currentUser ?: throw Exception("Register failed")
+            return firebaseAuth.currentUser ?: throw Exception(string.getString(R.string.error_default))
         } catch (e: Exception) {
             throw Exception(e.message)
         }
@@ -97,11 +102,12 @@ class AuthRepository @Inject constructor(
             if (!isEmailValid(email)) {
                 val response = apiService.getUserEmail(id)
                 if (response.isSuccessful) {
-                    email = response.body() ?: throw Exception("Email not found in response")
+                    email = response.body()
+                        ?: throw Exception(string.getString(R.string.error_account_not_found))
                 } else {
                     when (response.code()) {
-                        404 -> throw Exception("Username $id not found")
-                        else -> throw Exception("Error fetching email: ${response.message()}")
+                        404 -> throw Exception(string.getString(R.string.error_account_not_found))
+                        else -> throw Exception(string.getString(R.string.error_default))
                     }
                 }
             }
@@ -136,12 +142,10 @@ class AuthRepository @Inject constructor(
         }
     }
 
-    suspend fun logout(): FirebaseUser {
+    suspend fun signout() {
         try {
             firebaseAuth.signOut()
             authPreferences.clearLoggedUser()
-
-            return firebaseAuth.currentUser ?: throw Exception("Logout failed")
         } catch (e: Exception) {
             throw Exception(e.message)
         }

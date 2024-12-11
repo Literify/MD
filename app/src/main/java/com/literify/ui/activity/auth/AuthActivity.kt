@@ -41,11 +41,11 @@ class AuthActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_SECURE,
             WindowManager.LayoutParams.FLAG_SECURE
         )
+
+        navigate()
     }
 
-    public override fun onStart() {
-        super.onStart()
-
+    private fun navigate() {
         val currentUser = firebaseAuth.currentUser
         val deeplinkUri: Uri? = intent?.data
 
@@ -53,20 +53,16 @@ class AuthActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
+
             startActivity(intent)
-
             finish()
-            return
-        }
-
-        if (deeplinkUri != null) {
-            handleImplicitDeeplink(deeplinkUri)
-            return
+        } else if (deeplinkUri != null) {
+            navigateDeeplink(deeplinkUri)
         }
     }
 
-    // TODO: Extract string resources & show state according to ui/ux plan
-    private fun handleImplicitDeeplink(deeplinkUri: Uri) {
+    // TODO: Show state according to ui/ux plan
+    private fun navigateDeeplink(deeplinkUri: Uri) {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_activity_auth) as NavHostFragment
         val navController = navHostFragment.navController
@@ -88,21 +84,25 @@ class AuthActivity : AppCompatActivity() {
                     mode == "verifyEmail" && (oobActionCodeResult?.operation == ActionCodeResult.VERIFY_EMAIL) -> {
                         try {
                             authRepository.confirmEmailVerification(oobCode)
-                            Snackbar.make(binding.root, "Email berhasil diverifikasi", Snackbar.LENGTH_SHORT).show()
+                            showSnackbar(getString(R.string.success_email_verification))
                         } catch (e: Exception) {
                             Log.e(TAG, "Failed to confirm email verification: ${e.message}")
-                            Snackbar.make(binding.root, "Gagal verifikasi email", Snackbar.LENGTH_SHORT).show()
+                            showSnackbar(getString(R.string.error_email_verification))
                         }
                     }
                     else -> {
-                        Snackbar.make(binding.root, "Invalid or unsupported deeplink", Snackbar.LENGTH_SHORT).show()
+                        showSnackbar(getString(R.string.error_request_invalid))
                     }
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to process OOB code: ${e.message}")
-                Snackbar.make(binding.root, "Gagal memproses tautan", Snackbar.LENGTH_SHORT).show()
+                showSnackbar(getString(R.string.error_request_invalid))
             }
         }
         intent.data = null
+    }
+
+    private fun showSnackbar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 }

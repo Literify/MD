@@ -5,14 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
+import com.literify.R
 import com.literify.data.repository.AuthRepository
+import com.literify.util.StringProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SigninViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val string: StringProvider
 ) : ViewModel() {
 
     private val _signinState = MutableLiveData<SigninState>()
@@ -23,10 +26,10 @@ class SigninViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val user = authRepository.loginWithEmailPassword(email, password)
+                val user = authRepository.signinWithEmailPassword(email, password)
                 _signinState.value = SigninState.Success(user)
             } catch (e: Exception) {
-                _signinState.value = SigninState.Error(e.message ?: "Login failed")
+                _signinState.value = SigninState.Error(e.message ?: string.getString(R.string.error_default))
             }
         }
     }
@@ -36,10 +39,10 @@ class SigninViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val user = authRepository.loginWithGoogleIdToken(idToken)
+                val user = authRepository.signInWithGoogleIdToken(idToken)
                 _signinState.value = SigninState.Success(user)
             } catch (e: Exception) {
-                _signinState.value = SigninState.Error(e.message ?: "Login with Google failed")
+                _signinState.value = SigninState.Error(e.message ?: string.getString(R.string.error_default))
             }
         }
     }
