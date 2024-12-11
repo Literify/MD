@@ -41,11 +41,11 @@ class AuthActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_SECURE,
             WindowManager.LayoutParams.FLAG_SECURE
         )
+
+        navigate()
     }
 
-    public override fun onStart() {
-        super.onStart()
-
+    private fun navigate() {
         val currentUser = firebaseAuth.currentUser
         val deeplinkUri: Uri? = intent?.data
 
@@ -53,20 +53,16 @@ class AuthActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
+
             startActivity(intent)
-
             finish()
-            return
-        }
-
-        if (deeplinkUri != null) {
-            handleImplicitDeeplink(deeplinkUri)
-            return
+        } else if (deeplinkUri != null) {
+            navigateDeeplink(deeplinkUri)
         }
     }
 
     // TODO: Show state according to ui/ux plan
-    private fun handleImplicitDeeplink(deeplinkUri: Uri) {
+    private fun navigateDeeplink(deeplinkUri: Uri) {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_activity_auth) as NavHostFragment
         val navController = navHostFragment.navController
