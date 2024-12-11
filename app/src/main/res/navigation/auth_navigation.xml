@@ -3,19 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/auth_navigation"
-    app:startDestination="@id/onboardingFragment ">
+    app:startDestination="@+id/onboardingFragment" >
+
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="com.literify.ui.fragment.onboarding.OnboardingFragment"
+        android:label="fragment_onboarding"
+        tools:layout="@layout/fragment_onboarding" >
+        <action
+            android:id="@+id/action_onboardingFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/action_onboardingFragment_to_signinFragment"
+            app:destination="@id/signinFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/signinFragment"
         android:name="com.literify.ui.fragment.sign_in.SigninFragment"
-        android:label="fragment_login"
+        android:label="fragment_signin"
         tools:layout="@layout/fragment_signin" >
         <action
             android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_signupFragment"
-            app:destination="@id/signupFragment" />
     </fragment>
 
     <fragment
@@ -30,23 +40,4 @@
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" >
     </fragment>
-
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.literify.ui.activity.main.MainActivity"
-        android:label="MainActivity" />
-    <fragment
-        android:id="@+id/onboardingFragment"
-        android:name="com.literify.ui.fragment.onboarding.OnboardingFragment"
-        android:label="fragment_onboarding"
-        tools:layout="@layout/fragment_onboarding" >
-        <action
-            android:id="@+id/action_onboardingFragment_to_signupFragment"
-            app:destination="@id/signupFragment" />
-        <action
-            android:id="@+id/action_onboardingFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
-
-
 </navigation>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.onboarding.screens.FirstScreen"
-    android:background="@drawable/backgorund_gradation">
+    android:background="@drawable/bg_gradation">
 
 
     <ImageView
@@ -13,6 +13,7 @@
         android:layout_width="339dp"
         android:layout_height="294dp"
         android:src="@drawable/logo_onboarding"
+        android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +27,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="64dp"
         android:fontFamily="@font/inter_semibold"
-        android:text="@string/berikutnya"
+        android:text="@string/next"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +42,7 @@
         android:layout_marginBottom="24dp"
         android:gravity="center_horizontal|top"
         android:lineSpacingExtra="3sp"
-        android:text="Literify, aplikasi untuk menemukan buku dan mendapatkan rekomendasi yang tepat sesuai kebutuhan Anda."
+        android:text="@string/body_onboarding_1"
         android:textColor="@color/neutral_100"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.onboarding.screens.FirstScreen"
-    android:background="@drawable/backgorund_gradation">
+    android:background="@drawable/bg_gradation">
 
     <TextView
         android:id="@+id/textView3"
@@ -17,7 +17,7 @@
         android:fontFamily="@font/inter_medium"
         android:gravity="center_vertical"
         android:lineSpacingExtra="4sp"
-        android:text="@string/selamat_datang_di_literify"
+        android:text="@string/title_onboarding"
         android:textColor="@color/neutral_700"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/inter_bold"
-        android:text="@string/tetapkan_pengingat_untuk_membaca_sesuai_kecepatan_anda_sendiri"
+        android:text="@string/body_onboarding_4"
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +58,7 @@
         android:layout_height="50dp"
         android:layout_marginBottom="64dp"
         android:fontFamily="@font/inter_semibold"
-        android:text="Daftar"
+        android:text="@string/sign_up"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +71,7 @@
         android:layout_height="50dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/inter_semibold"
-        android:text="Masuk"
+        android:text="@string/sign_in"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/buttonSignup"
         app:layout_constraintEnd_toEndOf="parent"

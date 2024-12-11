@@ -65,7 +65,7 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    // TODO: Extract string resources & show state according to ui/ux plan
+    // TODO: Show state according to ui/ux plan
     private fun handleImplicitDeeplink(deeplinkUri: Uri) {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_activity_auth) as NavHostFragment
@@ -88,21 +88,25 @@ class AuthActivity : AppCompatActivity() {
                     mode == "verifyEmail" && (oobActionCodeResult?.operation == ActionCodeResult.VERIFY_EMAIL) -> {
                         try {
                             authRepository.confirmEmailVerification(oobCode)
-                            Snackbar.make(binding.root, "Email berhasil diverifikasi", Snackbar.LENGTH_SHORT).show()
+                            showSnackbar(getString(R.string.success_email_verification))
                         } catch (e: Exception) {
                             Log.e(TAG, "Failed to confirm email verification: ${e.message}")
-                            Snackbar.make(binding.root, "Gagal verifikasi email", Snackbar.LENGTH_SHORT).show()
+                            showSnackbar(getString(R.string.error_email_verification))
                         }
                     }
                     else -> {
-                        Snackbar.make(binding.root, "Invalid or unsupported deeplink", Snackbar.LENGTH_SHORT).show()
+                        showSnackbar(getString(R.string.error_request_invalid))
                     }
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to process OOB code: ${e.message}")
-                Snackbar.make(binding.root, "Gagal memproses tautan", Snackbar.LENGTH_SHORT).show()
+                showSnackbar(getString(R.string.error_request_invalid))
             }
         }
         intent.data = null
+    }
+
+    private fun showSnackbar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 }

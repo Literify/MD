@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.onboarding.screens.FirstScreen"
-    android:background="@drawable/backgorund_gradation">
+    android:background="@drawable/bg_gradation">
 
     <TextView
         android:id="@+id/textView3"
@@ -17,7 +17,7 @@
         android:fontFamily="@font/inter_medium"
         android:gravity="center_vertical"
         android:lineSpacingExtra="4sp"
-        android:text="@string/selamat_datang_di_literify"
+        android:text="@string/title_onboarding"
         android:textColor="@color/neutral_700"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
         android:fontFamily="@font/inter_bold"
-        android:text="@string/dapatkan_rekomendasi_buku_dari_pembaca_lain"
+        android:text="@string/body_onboarding_3"
         android:textColor="@color/black"
         android:textSize="24sp"
         tools:layout_editor_absoluteX="24dp"
@@ -59,7 +59,7 @@
         android:layout_height="50dp"
         android:layout_marginBottom="128dp"
         android:fontFamily="@font/inter_semibold"
-        android:text="@string/berikutnya"
+        android:text="@string/next"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

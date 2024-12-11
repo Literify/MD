@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.literify.R
 import com.literify.databinding.FragmentFourthScreenBinding
 
@@ -26,13 +25,13 @@ class FourthScreen : Fragment() {
                 findNavController().navigate(R.id.action_onboardingFragment_to_signupFragment)
             }
             buttonSignin.setOnClickListener {
-                findNavController().navigate(R.id.action_onboardingFragment_to_loginFragment)
+                findNavController().navigate(R.id.action_onboardingFragment_to_signinFragment)
             }
         }
         return binding.root
     }
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Pastikan binding null ketika view dihancurkan untuk menghindari memory leak
+        _binding = null
     }
 }

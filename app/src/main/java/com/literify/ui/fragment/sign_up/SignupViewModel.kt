@@ -5,14 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
+import com.literify.R
 import com.literify.data.repository.AuthRepository
+import com.literify.util.StringProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SignupViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val string: StringProvider
 ) : ViewModel() {
 
     private val _signupState = MutableLiveData<SignupState>()
@@ -23,10 +26,10 @@ class SignupViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val user = authRepository.registerWithEmailPassword(firstName,lastName,email, password)
+                val user = authRepository.signupWithEmailPassword(firstName,lastName,email, password)
                 _signupState.value = SignupState.Success(user)
             } catch (e: Exception) {
-                _signupState.value = SignupState.Error(e.message ?: "Signup failed")
+                _signupState.value = SignupState.Error(e.message ?: string.getString(R.string.error_default))
             }
         }
     }

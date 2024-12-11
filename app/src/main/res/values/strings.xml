@@ -6,8 +6,14 @@
     <string name="hint">Petunjuk</string>
     <string name="next">Lanjut</string>
     <string name="cancel">Batal</string>
-    <string name="search">Cari Buku</string>
     <string name="id">ID</string>
+    <string name="start">Mulai</string>
+    <string name="home">Beranda</string>
+    <string name="explore">Eksplor</string>
+    <string name="profile">Profil</string>
+    <string name="email">Email</string>
+    <string name="notification">Notifikasi</string>
+
     <string name="sign_in">Masuk</string>
     <string name="sign_up">Registrasi</string>
     <string name="password">Kata Sandi</string>
@@ -15,22 +21,26 @@
     <string name="forgot_password">Lupa Kata Sandi?</string>
     <string name="first_name">Nama Depan</string>
     <string name="last_name">Nama Belakang</string>
-    <string name="email">Email</string>
     <string name="sign_in_with_google">Masuk dengan Google</string>
     <string name="sign_up_with_google">Daftar dengan Google</string>
     <string name="sign_out">Keluar</string>
+    <string name="search_book">Cari Buku</string>
 
-    <string name="error_default_msg">Terjadi kesalahan, coba lagi nanti</string>
-    <string name="validation_error_required">Diperlukan</string>
-    <string name="validation_error_submit">Mohon periksa kembali data yang dimasukkan</string>
-    <string name="validation_error_email">Email tidak valid</string>
-    <string name="validation_error_password">Kata sandi harus memiliki minimal 8 karakter, termasuk huruf besar dan angka.</string>
-    <string name="validation_error_confirm_password">Konfirmasi kata sandi tidak cocok</string>
+    <string name="error_default">Terjadi kesalahan, coba lagi nanti</string>
+    <string name="error_account_mismatch">ID atau kata sandi Anda tidak cocok. Silakan coba lag</string>
+    <string name="error_account_not_found">Akun tidak ditemukan</string>
+    <string name="error_request_invalid">Permintaan tidak valid</string>
+    <string name="error_email_verification">Gagal verifikasi email</string>
+    <string name="error_validation_required">Diperlukan</string>
+    <string name="error_validation_submit">Mohon periksa kembali data yang dimasukkan</string>
+    <string name="error_validation_email">Email tidak valid</string>
+    <string name="error_validation_password">Kata sandi harus memiliki minimal 8 karakter, termasuk huruf besar dan angka.</string>
+    <string name="error_validation_confirm_password">Konfirmasi kata sandi tidak cocok</string>
 
-    <string name="navbar_home">Beranda</string>
-    <string name="navbar_explore">Eksplor</string>
-    <string name="navbar_profile">Profil</string>
+    <string name="success_email_verification">Email berhasil diverifikasi</string>
+    <string name="success_reset_password">Kata sandi berhasil direset</string>
 
+    <string name="title_onboarding">Selamat datang di Literify</string>
     <string name="title_sign_in_msg">Masuk ke Akun Anda</string>
     <string name="title_getting_started">Mari Memulai</string>
     <string name="title_find_account">Temukan Akun Anda</string>
@@ -40,11 +50,13 @@
     <string name="title_most_authors">Penulis Terbanyak Bulan Ini</string>
     <string name="title_logout">Konfirmasi keluar</string>
 
+    <string name="body_onboarding_1">Literify, aplikasi untuk menemukan buku dan mendapatkan rekomendasi yang tepat sesuai kebutuhan Anda.</string>
+    <string name="body_onboarding_2">Temukan buku yang sesuai dengan minat Anda</string>
+    <string name="body_onboarding_3">Dapatkan rekomendasi buku dari pembaca lain.</string>
+    <string name="body_onboarding_4">Tetapkan pengingat untuk membaca sesuai kecepatan Anda sendiri.</string>
     <string name="body_sign_in_instructions">Login dengan ID dan Kata Sandi</string>
     <string name="body_identifier">Nama Pengguna / Email</string>
-    <string name="body_or">Atau</string>
     <string name="body_no_account">Tidak punya akun?</string>
-    <string name="body_user_not_found">Nama pengguna %1$s tidak ditemukan</string>
     <string name="body_create_account_msg">Yuk, buat akun Anda di sini</string>
     <string name="body_find_account_msg">Masukkan nama pengguna atau email Anda</string>
     <string name="body_reset_password_msg">Kami akan mengirimkan tautan ke email Anda untuk mereset kata sandi Anda</string>
@@ -52,12 +64,4 @@
     <string name="body_logout_msg">Anda harus keluar untuk melanjutkan reset password. Apakah Anda ingin keluar sekarang?</string>
     <string name="body_from_your_goals">Dari Sasaranmu</string>
     <string name="body_most_genre">Genre yang Paling Sering Dibaca</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="mulai">Mulai</string>
-    <string name="temukan_buku_yang_sesuai_dengan_minat_anda">Temukan buku yang sesuai dengan minat Anda</string>
-    <string name="selamat_datang_di_literify">Selamat datang di Literify</string>
-    <string name="dapatkan_rekomendasi_buku_dari_pembaca_lain">Dapatkan rekomendasi buku dari pembaca lain.</string>
-    <string name="tetapkan_pengingat_untuk_membaca_sesuai_kecepatan_anda_sendiri">Tetapkan pengingat untuk membaca sesuai kecepatan Anda sendiri.</string>
-    <string name="berikutnya">Berikutnya</string>
 </resources>

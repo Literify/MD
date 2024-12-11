@@ -95,22 +95,7 @@ class MainActivity : AppCompatActivity() {
 
         when (mode) {
             "resetPassword" -> {
-                logoutDialog = AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.title_logout))
-                    .setMessage(getString(R.string.body_logout_msg))
-                    .setPositiveButton(getString(R.string.sign_out)) { _, _ ->
-                        val intent = Intent(this, AuthActivity::class.java).apply {
-                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            data = deeplinkUri
-                        }
-
-                        firebaseAuth.signOut()
-                        startActivity(intent)
-                        finish()
-                    }
-                    .setNegativeButton(getString(R.string.cancel), null)
-                    .create()
-                logoutDialog?.show()
+                showLogoutDialog()
             }
             "verifyEmail" -> {
                 lifecycleScope.launch {
@@ -118,16 +103,16 @@ class MainActivity : AppCompatActivity() {
                         val oobAction = authRepository.verifyOobCode(oobCode)
                         if (oobAction?.operation == ActionCodeResult.VERIFY_EMAIL) {
                             authRepository.confirmEmailVerification(oobCode)
-                            Snackbar.make(binding.root, "Email berhasil diverifikasi", Snackbar.LENGTH_SHORT).show()
+                            showSnackbar(getString(R.string.success_email_verification))
                         }
                     } catch (e: Exception) {
                         Log.e(TAG, "Error: ${e.message}")
-                        Snackbar.make(binding.root, "Gagal verifikasi email", Snackbar.LENGTH_SHORT).show()
+                        showSnackbar(getString(R.string.error_email_verification))
                     }
                 }
             }
             else -> {
-                Snackbar.make(binding.root, "Invalid deeplink", Snackbar.LENGTH_SHORT).show()
+                showSnackbar(getString(R.string.error_request_invalid))
             }
         }
         intent.data = null
@@ -159,6 +144,30 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e(TAG, "Failed to save credential", e)
         }
+    }
+
+    private fun showLogoutDialog() {
+        logoutDialog = AlertDialog.Builder(this)
+            .setTitle(getString(R.string.title_logout))
+            .setMessage(getString(R.string.body_logout_msg))
+            .setPositiveButton(getString(R.string.sign_out)) { _, _ ->
+                lifecycleScope.launch {
+                    authRepository.signout()
+                }
+
+                val intent = Intent(this, AuthActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
+                startActivity(intent)
+                finish()
+            }
+            .setNegativeButton(getString(R.string.cancel), null)
+            .create()
+        logoutDialog?.show()
+    }
+
+    private fun showSnackbar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
     companion object {
