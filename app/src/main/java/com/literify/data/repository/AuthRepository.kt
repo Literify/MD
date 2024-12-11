@@ -4,18 +4,35 @@ import com.google.firebase.auth.ActionCodeResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.literify.data.remote.model.UserPayload
+import com.literify.data.remote.retrofit.ApiService
+import com.literify.util.InputValidator.isEmailValid
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val authPreferences: AuthPreferences
+    private val authPreferences: AuthPreferences,
+    private val apiService: ApiService
 ) {
 
-    // TODO: Implement Username/Phone Number Sign-In
     suspend fun loginWithEmailPassword(id: String, password: String): FirebaseUser {
+        var email = id
+
         try {
-            firebaseAuth.signInWithEmailAndPassword(id, password).await()
+            if (!isEmailValid(email)) {
+                val response = apiService.getUserEmail(id)
+                if (response.isSuccessful) {
+                    email = response.body() ?: throw Exception("Email not found in response")
+                } else {
+                    when (response.code()) {
+                        404 -> throw Exception("Username $id not found")
+                        else -> throw Exception("Error fetching email: ${response.message()}")
+                    }
+                }
+            }
+
+            firebaseAuth.signInWithEmailAndPassword(email, password).await()
 
             authPreferences.setLoggedUser(id)
             authPreferences.saveCredential(id, password, null)
@@ -37,7 +54,6 @@ class AuthRepository @Inject constructor(
         }
     }
 
-    // TODO: Implement Add User Data to Firestore
     suspend fun registerWithEmailPassword(
         firstName: String,
         lastName: String,
@@ -50,6 +66,21 @@ class AuthRepository @Inject constructor(
             authPreferences.setLoggedUser(email)
             authPreferences.saveCredential(email, password, null)
 
+            val registerUser = apiService.registerUser(
+                UserPayload(
+                    id = firebaseAuth.currentUser!!.uid,
+                    email = email,
+                    username = null,
+                    firstName = firstName,
+                    lastName = lastName,
+                    level = null
+                )
+            )
+
+            if (!registerUser.isSuccessful) {
+                throw Exception("Failed to register user: ${registerUser.message()}")
+            }
+
             val user = firebaseAuth.currentUser!!
             user.sendEmailVerification().await()
 
@@ -59,9 +90,22 @@ class AuthRepository @Inject constructor(
         }
     }
 
-    // TODO: Implement Find Account with Username/Phone Number
-    suspend fun sendPasswordResetEmail(email: String) {
+    suspend fun sendPasswordResetEmail(id: String) {
+        var email = id
+
         try {
+            if (!isEmailValid(email)) {
+                val response = apiService.getUserEmail(id)
+                if (response.isSuccessful) {
+                    email = response.body() ?: throw Exception("Email not found in response")
+                } else {
+                    when (response.code()) {
+                        404 -> throw Exception("Username $id not found")
+                        else -> throw Exception("Error fetching email: ${response.message()}")
+                    }
+                }
+            }
+
             firebaseAuth.sendPasswordResetEmail(email).await()
         } catch (e: Exception) {
             throw Exception(e.message)

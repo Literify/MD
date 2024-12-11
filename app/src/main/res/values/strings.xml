@@ -26,7 +26,6 @@
     <string name="validation_error_email">Email tidak valid</string>
     <string name="validation_error_password">Kata sandi harus memiliki minimal 8 karakter, termasuk huruf besar dan angka.</string>
     <string name="validation_error_confirm_password">Konfirmasi kata sandi tidak cocok</string>
-    <string name="validation_soon_identifier">Fitur masuk dengan nama pengguna atau nomor ponsel belum tersedia</string>
 
     <string name="navbar_home">Beranda</string>
     <string name="navbar_explore">Eksplor</string>
@@ -42,13 +41,14 @@
     <string name="title_logout">Konfirmasi keluar</string>
 
     <string name="body_sign_in_instructions">Login dengan ID dan Kata Sandi</string>
-    <string name="body_identifier">Nama Pengguna / Email / Nomor Ponsel</string>
+    <string name="body_identifier">Nama Pengguna / Email</string>
     <string name="body_or">Atau</string>
     <string name="body_no_account">Tidak punya akun?</string>
+    <string name="body_user_not_found">Nama pengguna %1$s tidak ditemukan</string>
     <string name="body_create_account_msg">Yuk, buat akun Anda di sini</string>
-    <string name="body_find_account_msg">Masukkan nama pengguna, email, atau nomor ponsel Anda.</string>
-    <string name="body_reset_password_msg">Kami akan mengirimkan tautan ke email Anda untuk mereset kata sandi Anda.</string>
-    <string name="body_create_password_msg">Buat kata sandi 8+ karakter dengan setidaknya 1 huruf besar, 1 huruf kecil, dan 1 angka.</string>
+    <string name="body_find_account_msg">Masukkan nama pengguna atau email Anda</string>
+    <string name="body_reset_password_msg">Kami akan mengirimkan tautan ke email Anda untuk mereset kata sandi Anda</string>
+    <string name="body_create_password_msg">Buat kata sandi 8+ karakter dengan setidaknya 1 huruf besar, 1 huruf kecil, dan 1 angka</string>
     <string name="body_logout_msg">Anda harus keluar untuk melanjutkan reset password. Apakah Anda ingin keluar sekarang?</string>
     <string name="body_from_your_goals">Dari Sasaranmu</string>
     <string name="body_most_genre">Genre yang Paling Sering Dibaca</string>

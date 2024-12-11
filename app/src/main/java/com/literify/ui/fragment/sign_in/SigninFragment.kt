@@ -193,12 +193,8 @@ class SigninFragment : Fragment() {
         }
 
         val isNoError = !binding.inputId.isErrorEnabled && !binding.inputPassword.isErrorEnabled
-        val isEmailIdentifier = isEmailValid(identifier)
-        if (isNoError && isEmailIdentifier) {
+        if (isNoError) {
             viewModel.loginWithPassword(identifier, password)
-        } else if (!isEmailIdentifier) {
-            // TODO: Implement Username/Phone Number Sign-In
-            showError(getString(R.string.validation_soon_identifier))
         } else {
             showError(getString(R.string.validation_error_submit))
         }
