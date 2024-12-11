@@ -1,16 +1,34 @@
 package com.literify.ui.fragment.sign_in
 
-import androidx.fragment.app.viewModels
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
+import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.GetPasswordOption
+import androidx.credentials.PasswordCredential
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import com.google.android.material.snackbar.Snackbar
+import com.literify.BuildConfig
 import com.literify.R
 import com.literify.databinding.FragmentSigninBinding
+import com.literify.ui.activity.main.MainActivity
+import com.literify.ui.activity.main.MainActivity.Companion.EXTRA_SAVE_CREDENTIAL
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SigninFragment : Fragment() {
@@ -19,6 +37,11 @@ class SigninFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: SigninViewModel by viewModels()
+
+    private var isLoginInitialized = false
+
+    @Inject
+    lateinit var credentialManager: CredentialManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,18 +55,49 @@ class SigninFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.apply{
-            buttonSignin.setOnClickListener {
-                val identifier = binding.inputId.editText?.text.toString()
-                val password = binding.inputPassword.editText?.text.toString()
+        initializeUI()
+        setupObservers()
 
-                if (identifier.isNotEmpty() && password.isNotEmpty()) {
-                    viewModel.login(identifier, password)
+        if (!isLoginInitialized) {
+            loginWithCredentialsManager()
+            isLoginInitialized = true
+        }
+    }
+
+    private fun initializeUI() {
+        binding.apply {
+            inputId.editText?.apply {
+                addTextChangedListener {
+                    inputId.isErrorEnabled = false
+                }
+
+                setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus && text.isEmpty()) {
+                        inputId.error =
+                            "${getString(R.string.body_identifier)} ${getString(R.string.validation_error_required)}"
+                    }
                 }
             }
 
+            inputPassword.editText?.apply  {
+                addTextChangedListener {
+                    inputPassword.isErrorEnabled = false
+                }
+
+                setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus && text.isEmpty()) {
+                        inputPassword.error =
+                            "${getString(R.string.password)} ${getString(R.string.validation_error_required)}"
+                    }
+                }
+            }
+
+            buttonSignin.setOnClickListener {
+                loginWithEmailPassword()
+            }
+
             buttonSigninGoogle.setOnClickListener {
-                // TODO: Implement Google Sign-In
+                loginWithGoogleCredentialsManager()
             }
 
             buttonForgotPassword.setOnClickListener {
@@ -54,36 +108,175 @@ class SigninFragment : Fragment() {
                 findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
             }
         }
+    }
 
-        viewModel.loginState.observe(viewLifecycleOwner) { state ->
+    private fun setupObservers() {
+        viewModel.signinState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is LoginState.Loading -> {
-                    binding.buttonSignin.apply {
-                        isEnabled = false
-                        text = ""
-                    }
-                    binding.progressSignin.visibility = View.VISIBLE
+                is SigninState.Loading -> {
+                    showLoading(true, state.button)
                 }
-                is LoginState.Success -> {
-                    binding.buttonSignin.apply {
-                        isEnabled = true
-                        text = getString(R.string.sign_in)
-                    }
-                    binding.progressSignin.visibility = View.GONE
+                is SigninState.Success -> {
+                    showLoading(false)
 
-                    findNavController().navigate(R.id.mainActivity)
+                    if(state.user != null) {
+                        val intent = Intent(requireContext(), MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+                        val isEmailLogin = state.user.providerData.any { it.providerId == "password" }
+                        if (isEmailLogin) {
+                            intent.putExtra(EXTRA_SAVE_CREDENTIAL, true)
+                        }
+
+                        startActivity(intent)
+                        requireActivity().finish()
+                    }
                 }
-                is LoginState.Error -> {
-                    binding.buttonSignin.apply {
-                        isEnabled = true
-                        text = getString(R.string.sign_in)
-                    }
-                    binding.progressSignin.visibility = View.GONE
-
-                    // TODO: Show error message
-                    Snackbar.make(binding.root, state.message, Snackbar.LENGTH_SHORT).show()
+                is SigninState.Error -> {
+                    showLoading(false)
+                    showError(state.message)
                 }
             }
         }
+    }
+
+    private fun loginWithCredentialsManager() {
+        lifecycleScope.launch {
+            val getPasswordOption = GetPasswordOption()
+            val getGoogleIdOption: GetGoogleIdOption =
+                GetGoogleIdOption.Builder()
+                    .setServerClientId(BuildConfig.OAUTH2_BROWSER_CLIENT_ID)
+                    .setNonce(System.currentTimeMillis().toString())
+                    .setFilterByAuthorizedAccounts(false)
+                    .setAutoSelectEnabled(true)
+                    .build()
+
+            try {
+                val result = credentialManager.getCredential(
+                    context = requireActivity(),
+                    request = GetCredentialRequest(listOf(getPasswordOption, getGoogleIdOption))
+                )
+
+                when (val credential = result.credential) {
+                    is PasswordCredential -> {
+                        val id = credential.id
+                        val password = credential.password
+
+                        viewModel.loginWithPassword(id, password)
+                    }
+                    is CustomCredential -> {
+                        if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                            try {
+                                val googleIdTokenCredential =
+                                    GoogleIdTokenCredential.createFrom(credential.data)
+
+                                viewModel.loginWithGoogleIdToken(googleIdTokenCredential.idToken)
+                            } catch (e: GoogleIdTokenParsingException) {
+                                Log.e(TAG, "Failed to parse Google ID Token", e)
+                                showError(getString(R.string.error_default_msg))
+                            }
+                        }
+                    }
+                }
+            } catch (_: Exception) { }
+        }
+    }
+
+    private fun loginWithEmailPassword() {
+        val identifier = binding.inputId.editText?.text.toString()
+        val password = binding.inputPassword.editText?.text.toString()
+
+        binding.apply {
+            inputId.editText?.requestFocus()
+            inputPassword.editText?.requestFocus()
+            inputPassword.editText?.clearFocus()
+        }
+
+        val isNoError = !binding.inputId.isErrorEnabled && !binding.inputPassword.isErrorEnabled
+        val isEmailIdentifier = isEmailValid(identifier)
+        if (isNoError && isEmailIdentifier) {
+            viewModel.loginWithPassword(identifier, password)
+        } else if (!isEmailIdentifier) {
+            // TODO: Implement Username/Phone Number Sign-In
+            showError(getString(R.string.validation_soon_identifier))
+        } else {
+            showError(getString(R.string.validation_error_submit))
+        }
+    }
+
+    private fun loginWithGoogleCredentialsManager() {
+        lifecycleScope.launch {
+            val getSignInWithGoogleOption: GetSignInWithGoogleOption =
+                GetSignInWithGoogleOption.Builder(BuildConfig.OAUTH2_BROWSER_CLIENT_ID)
+                    .setNonce(System.currentTimeMillis().toString())
+                    .build()
+
+            try {
+                val result = credentialManager.getCredential(
+                    context = requireActivity(),
+                    request = GetCredentialRequest(listOf(getSignInWithGoogleOption))
+                )
+
+                val googleIdTokenCredential = GoogleIdTokenCredential
+                    .createFrom(result.credential.data)
+                viewModel.loginWithGoogleIdToken(googleIdTokenCredential.idToken)
+            } catch (_: Exception) { }
+        }
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        return email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun showLoading(show: Boolean, button: String? = null) {
+        if (!show) {
+            binding.apply {
+                buttonSignin.isEnabled = true
+                buttonSignin.text = getString(R.string.sign_in)
+
+                buttonSigninGoogle.isEnabled = true
+                buttonSigninGoogle.text = getString(R.string.sign_in_with_google)
+
+                buttonForgotPassword.isEnabled = true
+                buttonSignup.isEnabled = true
+
+                progressSignin.visibility = View.GONE
+                progressSigninGoogle.visibility = View.GONE
+            }
+            return
+        }
+
+        binding.apply {
+            buttonSignin.isEnabled = false
+            buttonSigninGoogle.isEnabled = false
+            buttonForgotPassword.isEnabled = false
+            buttonSignup.isEnabled = false
+        }
+
+        when (button) {
+            "1" -> {
+                binding.apply {
+                    buttonSignin.text = ""
+                    progressSignin.visibility = View.VISIBLE
+                }
+            }
+
+            "2" -> {
+                binding.apply {
+                    buttonSigninGoogle.text = ""
+                    buttonSigninGoogle.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+                    progressSigninGoogle.visibility = View.VISIBLE
+                }
+            }
+        }
+    }
+
+    // TODO: Show error message according to ui/ux plan
+    private fun showError(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        const val TAG = "SigninFragment"
     }
 }

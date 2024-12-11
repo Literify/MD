@@ -3,42 +3,50 @@ package com.literify.ui.fragment.sign_in
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseAuth
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
+import com.literify.data.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SigninViewModel @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
-    private val _loginState = MutableLiveData<LoginState>()
-    val loginState: LiveData<LoginState> get() = _loginState
+    private val _signinState = MutableLiveData<SigninState>()
+    val signinState: LiveData<SigninState> get() = _signinState
 
-    fun login(email: String, password: String) {
-        _loginState.value = LoginState.Loading
+    fun loginWithPassword(email: String, password: String) {
+        _signinState.value = SigninState.Loading("1")
 
-        // TODO: Implement Username/Phone Number Sign-In
-
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    _loginState.value = LoginState.Success(firebaseAuth.currentUser)
-                } else {
-                    _loginState.value = LoginState.Error(task.exception?.message ?: "Login failed")
-                }
+        viewModelScope.launch {
+            try {
+                val user = authRepository.loginWithEmailPassword(email, password)
+                _signinState.value = SigninState.Success(user)
+            } catch (e: Exception) {
+                _signinState.value = SigninState.Error(e.message ?: "Login failed")
             }
+        }
     }
 
-    fun loginWithGoogle() {
-        _loginState.value = LoginState.Loading
+    fun loginWithGoogleIdToken(idToken: String?) {
+        _signinState.value = SigninState.Loading("2")
 
+        viewModelScope.launch {
+            try {
+                val user = authRepository.loginWithGoogleIdToken(idToken)
+                _signinState.value = SigninState.Success(user)
+            } catch (e: Exception) {
+                _signinState.value = SigninState.Error(e.message ?: "Login with Google failed")
+            }
+        }
     }
 }
 
-sealed class LoginState {
-    object Loading : LoginState()
-    data class Success(val user: FirebaseUser?) : LoginState()
-    data class Error(val message: String) : LoginState()
+sealed class SigninState {
+    data class Loading(val button: String) : SigninState()
+    data class Success(val user: FirebaseUser?) : SigninState()
+    data class Error(val message: String) : SigninState()
 }

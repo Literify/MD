@@ -69,7 +69,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_id"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:hint="@string/body_identifier"
                     app:boxStrokeWidth="0dp"
@@ -85,13 +85,15 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"/>
+                        android:isCredential="true"
+                        android:inputType="textAutoComplete"
+                        android:textSize="12sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_password"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:hint="@string/password"
                     app:boxStrokeWidth="0dp"
@@ -108,6 +110,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:isCredential="true"
                         android:inputType="textPassword"
                         android:textSize="12sp" />
                 </com.google.android.material.textfield.TextInputLayout>
