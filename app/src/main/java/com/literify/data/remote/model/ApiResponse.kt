@@ -106,13 +106,18 @@ data class GamificationResponse(
 
 data class LeaderboardResponse(
     @field:SerializedName("leaderboard")
-    val leaderboard: List<LeaderboardList?>?
+    val leaderboard: List<LeaderboardList?>? = null,
 )
 
 data class LeaderboardList(
-    val id: String,
-    val username: String,
-    val score: Int
+    @field:SerializedName("id")
+    val id: String? = null,
+
+    @field:SerializedName("username")
+    val username: String? = null,
+
+    @field:SerializedName("score")
+    val score: Int? = null
 )
 
 data class RankUpResponse(
@@ -134,11 +139,28 @@ data class StreakResponse(
     val lastCompletionDate: String? = null
 )
 
+data class PredictionResponse(
+    @field:SerializedName("fileUrl")
+    val fileUrl: String? = null,
+
+    @field:SerializedName("prediction")
+    val prediction: String? = null
+)
+
+data class PredictionList(
+    @field:SerializedName("extracted_text")
+    val extractedText: String?,
+
+    @field:SerializedName("predicted_genre")
+    val predictedGenre: String?
+)
+
 sealed class MessageData {
     data class GamificationResponseData(val gamificationResponse: GamificationResponse): MessageData()
     data class LeaderboardResponseData(val leaderboardResponse: LeaderboardResponse): MessageData()
     data class RankUpResponseData(val rankUpResponse: RankUpResponse): MessageData()
     data class StreakResponseData(val streakResponse: StreakResponse): MessageData()
+    data class PredictionResponseData(val predictionResponse: PredictionResponse): MessageData()
 }
 
 
