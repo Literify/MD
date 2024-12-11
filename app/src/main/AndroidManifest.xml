@@ -1,42 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-    <application
-        android:name=".LiterifyApp"
-        android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Literify"
-        tools:targetApi="31">
+xmlns:tools="http://schemas.android.com/tools">
+<application
+    android:name=".LiterifyApp"
+    android:allowBackup="true"
+    android:dataExtractionRules="@xml/data_extraction_rules"
+    android:fullBackupContent="@xml/backup_rules"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:supportsRtl="true"
+    android:theme="@style/Theme.Literify"
+    tools:targetApi="31">
 
 
-        <activity
-            android:name=".ui.activity.auth.AuthActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:launchMode="singleTask"
-            android:noHistory="true"
-            android:exported="false" />
+    <activity
+        android:name=".ui.activity.auth.AuthActivity"
+        android:windowSoftInputMode="adjustResize"
+        android:launchMode="singleTask"
+        android:noHistory="true"
+        android:exported="false" />
 
-        <activity
-            android:name=".ui.activity.main.MainActivity"
-            
-            android:windowSoftInputMode="adjustResize"
-            android:launchMode="singleTop"
-            android:exported="true" >
-            <nav-graph android:value="@navigation/mobile_navigation" />
+    <activity
+        android:name=".ui.activity.camera.CameraActivity"
+        android:launchMode="singleTask"
+         />
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+    <activity
+        android:name=".ui.activity.main.MainActivity"
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-    </application>
+        android:windowSoftInputMode="adjustResize"
+        android:launchMode="singleTop"
+        android:exported="true">
+        <nav-graph android:value="@navigation/mobile_navigation" />
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+
+    <meta-data
+        android:name="preloaded_fonts"
+        android:resource="@array/preloaded_fonts" />
+</application>
 </manifest>
+

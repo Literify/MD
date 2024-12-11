@@ -61,4 +61,8 @@
     <string name="oboardingText4">Tetapkan pengingat untuk membaca sesuai kecepatan Anda sendiri.</string>
     <string name="berikutnya">Berikutnya</string>
     <string name="onboardingText1">Literify, aplikasi untuk menemukan buku dan mendapatkan rekomendasi yang tepat sesuai kebutuhan Anda.</string>
+    <string name="similiar_book">Buku yang serupa</string>
+    <string name="book_thumbnail">Thumbnail Buku</string>
+    <string name="buy_this_book">Beli buku ini</string>
+    <string name="add_to_library">Tambahkan ke koleksi</string>
 </resources>
