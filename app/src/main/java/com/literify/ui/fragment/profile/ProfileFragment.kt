@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
+import com.literify.R
 import com.literify.databinding.FragmentProfileBinding
 import com.literify.ui.activity.auth.AuthActivity
 import dagger.hilt.android.AndroidEntryPoint
