@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/auth_navigation"
-    app:startDestination="@id/bookDetailFragment">
+    app:startDestination="@id/cameraActivity">
 
     <fragment
         android:id="@+id/signinFragment"
@@ -52,6 +52,11 @@
         android:name="com.literify.ui.fragment.book_detail.BookDetailFragment"
         android:label="fragment_book_detail"
         tools:layout="@layout/fragment_book_detail" />
+    <activity
+        android:id="@+id/cameraActivity"
+        android:name="com.literify.ui.activity.camera.CameraActivity"
+        android:label="activity_camera"
+        tools:layout="@layout/activity_camera" />
 
 
 </navigation>

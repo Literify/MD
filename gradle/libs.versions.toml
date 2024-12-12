@@ -1,5 +1,7 @@
 [versions]
 agp = "8.7.2"
+cameraCore = "1.4.0"
+cameraViewVersion = "1.1.0"
 credentials = "1.5.0-beta01"
 datastorePreferences = "1.1.1"
 firebaseBom = "33.6.0"
@@ -31,6 +33,10 @@ secretsGradlePlugin = "2.0.1"
 cameraView = "1.4.0"
 
 [libraries]
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCore" }
+androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "cameraCore" }
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraCore" }
+androidx-camera-view-v110 = { module = "androidx.camera:camera-view", version.ref = "cameraViewVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
