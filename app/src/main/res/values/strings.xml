@@ -13,6 +13,11 @@
     <string name="profile">Profil</string>
     <string name="email">Email</string>
     <string name="notification">Notifikasi</string>
+    <string name="label">Label</string>
+    <string name="username">Nama Pengguna</string>
+    <string name="save">Simpan</string>
+    <string name="authors">Pengarang</string>
+    <string name="description">Deskripsi</string>
 
     <string name="sign_in">Masuk</string>
     <string name="sign_up">Registrasi</string>
@@ -24,7 +29,14 @@
     <string name="sign_in_with_google">Masuk dengan Google</string>
     <string name="sign_up_with_google">Daftar dengan Google</string>
     <string name="sign_out">Keluar</string>
+    <string name="zero_percent">0%</string>
     <string name="search_book">Cari Buku</string>
+    <string name="similiar_book">Buku yang serupa</string>
+    <string name="buy_this_book">Beli buku ini</string>
+    <string name="add_to_library">Tambahkan ke koleksi</string>
+    <string name="published_date">Tanggal Terbit</string>
+    <string name="my_library">Perpustakaan Saya</string>
+    <string name="book_detail">Detail Buku</string>
 
     <string name="error_default">Terjadi kesalahan, coba lagi nanti</string>
     <string name="error_account_mismatch">ID atau kata sandi Anda tidak cocok. Silakan coba lag</string>
@@ -66,18 +78,6 @@
     <string name="body_create_password_msg">Buat kata sandi 8+ karakter dengan setidaknya 1 huruf besar, 1 huruf kecil, dan 1 angka</string>
     <string name="body_logout_msg">Anda harus keluar untuk melanjutkan reset password. Apakah Anda ingin keluar sekarang?</string>
     <string name="body_from_your_goals">Dari Sasaranmu</string>
+    <string name="body_keep_reading">Teruslah Membaca Hari Ini!</string>
     <string name="body_most_genre">Genre yang Paling Sering Dibaca</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="mulai">Mulai</string>
-    <string name="onboardingText2">Temukan buku yang sesuai dengan minat Anda</string>
-    <string name="selamat_datang_di_literify">Selamat datang di Literify</string>
-    <string name="onboardingText3">Dapatkan rekomendasi buku dari pembaca lain.</string>
-    <string name="oboardingText4">Tetapkan pengingat untuk membaca sesuai kecepatan Anda sendiri.</string>
-    <string name="berikutnya">Berikutnya</string>
-    <string name="onboardingText1">Literify, aplikasi untuk menemukan buku dan mendapatkan rekomendasi yang tepat sesuai kebutuhan Anda.</string>
-    <string name="similiar_book">Buku yang serupa</string>
-    <string name="book_thumbnail">Thumbnail Buku</string>
-    <string name="buy_this_book">Beli buku ini</string>
-    <string name="add_to_library">Tambahkan ke koleksi</string>
 </resources>

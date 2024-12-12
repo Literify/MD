@@ -33,9 +33,10 @@
 
         <activity
             android:name=".ui.activity.camera.CameraActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:launchMode="singleTask"
-            android:noHistory="true"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activity.book_detail.BookDetailActivity"
             android:exported="false" />
 
         <meta-data
