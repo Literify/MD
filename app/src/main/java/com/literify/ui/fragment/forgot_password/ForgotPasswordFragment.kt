@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.literify.R
 import com.literify.databinding.FragmentForgotPasswordBinding
+import com.literify.util.InputValidator.isPasswordValid
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -68,14 +69,14 @@ class ForgotPasswordFragment : Fragment() {
                 is ResetPasswordState.Success -> {
                     showLoading(false)
 
-                    findNavController().navigateUp()
                     showError(state.message)
+                    findNavController().navigateUp()
                 }
                 is ResetPasswordState.Error -> {
                     showLoading(false)
 
-                    findNavController().navigateUp()
                     showError(state.errorMessage)
+                    findNavController().navigateUp()
                 }
             }
         }
@@ -95,7 +96,7 @@ class ForgotPasswordFragment : Fragment() {
                     setOnFocusChangeListener { _, hasFocus ->
                         if (!hasFocus && text.isEmpty()) {
                             input1.error =
-                                "${getString(R.string.body_identifier)} ${getString(R.string.validation_error_required)}"
+                                "${getString(R.string.body_identifier)} ${getString(R.string.error_validation_required)}"
                         }
                     }
                 }
@@ -112,7 +113,7 @@ class ForgotPasswordFragment : Fragment() {
                 if (isNoError) {
                     viewModel.requestPasswordReset(id)
                 } else {
-                    showError(getString(R.string.validation_error_submit))
+                    showError(getString(R.string.error_validation_submit))
                 }
             }
         }
@@ -133,11 +134,11 @@ class ForgotPasswordFragment : Fragment() {
                     setOnFocusChangeListener { _, hasFocus ->
                         if (!hasFocus) {
                             if (!isPasswordValid(text.toString())) {
-                                input1.error = getString(R.string.validation_error_password)
+                                input1.error = getString(R.string.error_validation_password)
                             }
                             if (text.isEmpty()) {
                                 input1.error =
-                                    "${getString(R.string.password)} ${getString(R.string.validation_error_required)}"
+                                    "${getString(R.string.password)} ${getString(R.string.error_validation_required)}"
                             }
                         }
                     }
@@ -157,11 +158,11 @@ class ForgotPasswordFragment : Fragment() {
                     setOnFocusChangeListener { _, hasFocus ->
                         if (!hasFocus) {
                             if (input1.editText?.text.toString() != text.toString()) {
-                                input2.error = getString(R.string.validation_error_confirm_password)
+                                input2.error = getString(R.string.error_validation_confirm_password)
                             }
                             if (text.isEmpty()) {
                                 input2.error =
-                                    "${getString(R.string.confirm_password)} ${getString(R.string.validation_error_required)}"
+                                    "${getString(R.string.confirm_password)} ${getString(R.string.error_validation_required)}"
                             }
                         }
                     }
@@ -180,15 +181,10 @@ class ForgotPasswordFragment : Fragment() {
                 if (isNoError) {
                     viewModel.confirmPasswordReset(oobCode, newPassword)
                 } else {
-                    showError(getString(R.string.validation_error_submit))
+                    showError(getString(R.string.error_validation_submit))
                 }
             }
         }
-    }
-
-    private fun isPasswordValid(password: String): Boolean {
-        return password.isNotEmpty() && password.length >= 8 && password.matches(".*[a-z].*".toRegex()) &&
-                password.matches(".*[A-Z].*".toRegex()) && password.matches(".*[0-9].*".toRegex())
     }
 
     private fun showLoading(show: Boolean) {

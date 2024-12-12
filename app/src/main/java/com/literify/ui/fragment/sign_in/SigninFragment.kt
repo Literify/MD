@@ -74,7 +74,7 @@ class SigninFragment : Fragment() {
                 setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus && text.isEmpty()) {
                         inputId.error =
-                            "${getString(R.string.body_identifier)} ${getString(R.string.validation_error_required)}"
+                            "${getString(R.string.body_identifier)} ${getString(R.string.error_validation_required)}"
                     }
                 }
             }
@@ -87,7 +87,7 @@ class SigninFragment : Fragment() {
                 setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus && text.isEmpty()) {
                         inputPassword.error =
-                            "${getString(R.string.password)} ${getString(R.string.validation_error_required)}"
+                            "${getString(R.string.password)} ${getString(R.string.error_validation_required)}"
                     }
                 }
             }
@@ -102,10 +102,6 @@ class SigninFragment : Fragment() {
 
             buttonForgotPassword.setOnClickListener {
                 findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
-            }
-
-            buttonSignup.setOnClickListener {
-                findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
             }
         }
     }
@@ -173,7 +169,7 @@ class SigninFragment : Fragment() {
                                 viewModel.loginWithGoogleIdToken(googleIdTokenCredential.idToken)
                             } catch (e: GoogleIdTokenParsingException) {
                                 Log.e(TAG, "Failed to parse Google ID Token", e)
-                                showError(getString(R.string.error_default_msg))
+                                showError(getString(R.string.error_default))
                             }
                         }
                     }
@@ -193,14 +189,10 @@ class SigninFragment : Fragment() {
         }
 
         val isNoError = !binding.inputId.isErrorEnabled && !binding.inputPassword.isErrorEnabled
-        val isEmailIdentifier = isEmailValid(identifier)
-        if (isNoError && isEmailIdentifier) {
+        if (isNoError) {
             viewModel.loginWithPassword(identifier, password)
-        } else if (!isEmailIdentifier) {
-            // TODO: Implement Username/Phone Number Sign-In
-            showError(getString(R.string.validation_soon_identifier))
         } else {
-            showError(getString(R.string.validation_error_submit))
+            showError(getString(R.string.error_validation_submit))
         }
     }
 
@@ -224,10 +216,6 @@ class SigninFragment : Fragment() {
         }
     }
 
-    private fun isEmailValid(email: String): Boolean {
-        return email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
-
     private fun showLoading(show: Boolean, button: String? = null) {
         if (!show) {
             binding.apply {
@@ -238,7 +226,6 @@ class SigninFragment : Fragment() {
                 buttonSigninGoogle.text = getString(R.string.sign_in_with_google)
 
                 buttonForgotPassword.isEnabled = true
-                buttonSignup.isEnabled = true
 
                 progressSignin.visibility = View.GONE
                 progressSigninGoogle.visibility = View.GONE
@@ -247,10 +234,12 @@ class SigninFragment : Fragment() {
         }
 
         binding.apply {
+            inputId.isEnabled = false
+            inputPassword.isEnabled = false
+
             buttonSignin.isEnabled = false
             buttonSigninGoogle.isEnabled = false
             buttonForgotPassword.isEnabled = false
-            buttonSignup.isEnabled = false
         }
 
         when (button) {

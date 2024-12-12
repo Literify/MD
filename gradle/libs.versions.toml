@@ -1,5 +1,6 @@
 [versions]
 agp = "8.7.2"
+coreSplashscreen = "1.0.1"
 cameraCore = "1.4.0"
 cameraViewVersion = "1.1.0"
 credentials = "1.5.0-beta01"
@@ -30,6 +31,8 @@ fragmentKtx = "1.8.5"
 firebaseAuth = "23.1.0"
 playServicesAuth = "21.2.0"
 secretsGradlePlugin = "2.0.1"
+retrofit = "2.9.0"
+glide = "4.16.0"
 cameraView = "1.4.0"
 
 [libraries]
@@ -38,6 +41,7 @@ androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "
 androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraCore" }
 androidx-camera-view-v110 = { module = "androidx.camera:camera-view", version.ref = "cameraViewVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
 androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
@@ -64,6 +68,8 @@ androidx-annotation = { group = "androidx.annotation", name = "annotation", vers
 androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
 androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraView" }

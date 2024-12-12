@@ -6,6 +6,10 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.firebase.auth.FirebaseAuth
+import com.literify.data.remote.retrofit.ApiConfig
+import com.literify.data.remote.retrofit.ApiService
+import com.literify.util.DefaultStringProvider
+import com.literify.util.StringProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,5 +39,17 @@ object Injection {
     @Singleton
     fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
         return context.dataStore
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiService(): ApiService {
+        return ApiConfig.getApiService()
+    }
+
+    @Provides
+    @Singleton
+    fun provideStringProvider(@ApplicationContext context: Context): StringProvider {
+        return DefaultStringProvider(context)
     }
 }

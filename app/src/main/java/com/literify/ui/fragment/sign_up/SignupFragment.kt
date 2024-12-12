@@ -13,6 +13,8 @@ import com.literify.R
 import com.literify.databinding.FragmentSignupBinding
 import com.literify.ui.activity.main.MainActivity
 import com.literify.ui.activity.main.MainActivity.Companion.EXTRA_SAVE_CREDENTIAL
+import com.literify.util.InputValidator.isEmailValid
+import com.literify.util.InputValidator.isPasswordValid
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -55,7 +57,7 @@ class SignupFragment : Fragment() {
                 setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus && text.isEmpty()) {
                         inputFirstName.error =
-                            "${getString(R.string.first_name)} ${getString(R.string.validation_error_required)}"
+                            "${getString(R.string.first_name)} ${getString(R.string.error_validation_required)}"
                     }
                 }
             }
@@ -68,7 +70,7 @@ class SignupFragment : Fragment() {
                 setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus && text.isEmpty()) {
                         inputLastName.error =
-                            "${getString(R.string.last_name)} ${getString(R.string.validation_error_required)}"
+                            "${getString(R.string.last_name)} ${getString(R.string.error_validation_required)}"
                     }
                 }
             }
@@ -81,12 +83,12 @@ class SignupFragment : Fragment() {
                 setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus) {
                         if (!isEmailValid(text.toString())) {
-                            inputEmail.error = getString(R.string.validation_error_email)
+                            inputEmail.error = getString(R.string.error_validation_email)
                         }
 
                         if (text.isEmpty()) {
                             inputEmail.error =
-                                "${getString(R.string.email)} ${getString(R.string.validation_error_required)}"
+                                "${getString(R.string.email)} ${getString(R.string.error_validation_required)}"
                         }
                     }
                 }
@@ -100,12 +102,12 @@ class SignupFragment : Fragment() {
                 setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus) {
                         if (!isPasswordValid(text.toString())) {
-                            inputPassword.error = getString(R.string.validation_error_password)
+                            inputPassword.error = getString(R.string.error_validation_password)
                         }
 
                         if (text.isEmpty()) {
                             inputPassword.error =
-                                "${getString(R.string.password)} ${getString(R.string.validation_error_required)}"
+                                "${getString(R.string.password)} ${getString(R.string.error_validation_required)}"
                         }
                     }
                 }
@@ -119,12 +121,12 @@ class SignupFragment : Fragment() {
                 setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus) {
                         if (passwordInput?.text.toString() != text.toString()) {
-                            inputConfirmPassword.error = getString(R.string.validation_error_confirm_password)
+                            inputConfirmPassword.error = getString(R.string.error_validation_confirm_password)
                         }
 
                         if (text.isEmpty()) {
                             inputConfirmPassword.error =
-                                "${getString(R.string.confirm_password)} ${getString(R.string.validation_error_required)}"
+                                "${getString(R.string.confirm_password)} ${getString(R.string.error_validation_required)}"
                         }
                     }
                 }
@@ -144,12 +146,13 @@ class SignupFragment : Fragment() {
                 confirmPasswordInput?.clearFocus()
 
                 val isNoError = !inputFirstName.isErrorEnabled && !inputLastName.isErrorEnabled &&
-                        !inputEmail.isErrorEnabled && !inputPassword.isErrorEnabled && !inputConfirmPassword.isErrorEnabled
+                        !inputEmail.isErrorEnabled && !inputPassword.isErrorEnabled &&
+                        !inputConfirmPassword.isErrorEnabled
 
                 if (isNoError) {
                     viewModel.signup(firstName, lastName, email, password)
                 } else {
-                    showError(getString(R.string.validation_error_submit))
+                    showError(getString(R.string.error_validation_submit))
                 }
             }
         }
@@ -185,21 +188,20 @@ class SignupFragment : Fragment() {
         }
     }
 
-    private fun isEmailValid(email: String): Boolean {
-        return email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
-
-    private fun isPasswordValid(password: String): Boolean {
-        return password.isNotEmpty() && password.length >= 6 && password.matches(".*[a-z].*".toRegex()) &&
-                password.matches(".*[A-Z].*".toRegex()) && password.matches(".*[0-9].*".toRegex())
-    }
-
     private fun showLoading(show: Boolean) {
-        binding.buttonSignup.apply {
-            isEnabled = !show
-            text = if (!show) getString(R.string.sign_up) else ""
+        binding.apply{
+            inputFirstName.isEnabled = !show
+            inputLastName.isEnabled = !show
+            inputEmail.isEnabled = !show
+            inputPassword.isEnabled = !show
+            inputConfirmPassword.isEnabled = !show
+
+            buttonSignup.apply {
+                isEnabled = !show
+                text = if (!show) getString(R.string.sign_up) else ""
+            }
+            progressSignup.visibility = if (show) View.VISIBLE else View.GONE
         }
-        binding.progressSignup.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     // TODO: Show error message according to ui/ux plan

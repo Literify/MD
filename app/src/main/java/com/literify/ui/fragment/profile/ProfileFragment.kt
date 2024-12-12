@@ -5,13 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.credentials.ClearCredentialStateRequest
-import androidx.credentials.CredentialManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
-import com.literify.R
+import com.literify.data.repository.AuthRepository
 import com.literify.databinding.FragmentProfileBinding
 import com.literify.ui.activity.auth.AuthActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,10 +23,10 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var firebaseAuth: FirebaseAuth
+    lateinit var authRepository: AuthRepository
 
     @Inject
-    lateinit var credentialManager: CredentialManager
+    lateinit var firebaseAuth: FirebaseAuth
 
     private val viewModel: ProfileViewModel by viewModels()
 
@@ -46,8 +44,7 @@ class ProfileFragment : Fragment() {
 
         binding.btnLogout.setOnClickListener {
             lifecycleScope.launch {
-                firebaseAuth.signOut()
-                credentialManager.clearCredentialState(ClearCredentialStateRequest())
+                authRepository.signout()
             }
 
             if (firebaseAuth.currentUser == null) {

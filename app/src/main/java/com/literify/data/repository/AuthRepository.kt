@@ -4,41 +4,62 @@ import com.google.firebase.auth.ActionCodeResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.literify.R
+import com.literify.data.remote.model.UserPayload
+import com.literify.data.remote.retrofit.ApiService
+import com.literify.util.InputValidator.isEmailValid
+import com.literify.util.StringProvider
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val authPreferences: AuthPreferences
+    private val authPreferences: AuthPreferences,
+    private val apiService: ApiService,
+    private val string: StringProvider
 ) {
 
-    // TODO: Implement Username/Phone Number Sign-In
-    suspend fun loginWithEmailPassword(id: String, password: String): FirebaseUser {
+    suspend fun signinWithEmailPassword(id: String, password: String): FirebaseUser {
+        var email = id
+
         try {
-            firebaseAuth.signInWithEmailAndPassword(id, password).await()
+            if (!isEmailValid(email)) {
+                val response = apiService.getUserEmail(id)
+                if (response.isSuccessful) {
+                    email = response.body()?.string()
+                        ?: throw Exception(string.getString(R.string.error_account_mismatch))
+                } else {
+                    when (response.code()) {
+                        404 -> throw Exception(string.getString(R.string.error_account_mismatch))
+                        else -> throw Exception(string.getString(R.string.error_default))
+                    }
+                }
+            }
+
+            firebaseAuth.signInWithEmailAndPassword(email, password).await()
 
             authPreferences.setLoggedUser(id)
             authPreferences.saveCredential(id, password, null)
 
-            return firebaseAuth.currentUser ?: throw Exception("Login failed")
+            return firebaseAuth.currentUser ?: throw Exception(string.getString(R.string.error_default))
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
 
-    suspend fun loginWithGoogleIdToken(idToken: String?): FirebaseUser {
+    suspend fun signInWithGoogleIdToken(idToken: String?): FirebaseUser {
         try {
             val credential = GoogleAuthProvider.getCredential(idToken, null)
 
             firebaseAuth.signInWithCredential(credential).await()
-            return firebaseAuth.currentUser ?: throw Exception("Login with Google failed")
+            return firebaseAuth.currentUser
+                ?: throw Exception(string.getString(R.string.error_default))
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
 
-    // TODO: Implement Add User Data to Firestore
-    suspend fun registerWithEmailPassword(
+    suspend fun signupWithEmailPassword(
         firstName: String,
         lastName: String,
         email: String,
@@ -51,17 +72,48 @@ class AuthRepository @Inject constructor(
             authPreferences.saveCredential(email, password, null)
 
             val user = firebaseAuth.currentUser!!
-            user.sendEmailVerification().await()
+            val registerUser = apiService.registerUser(
+                UserPayload(
+                    id = user.uid,
+                    email = email,
+                    username = null,
+                    firstName = firstName,
+                    lastName = lastName,
+                    level = null
+                )
+            )
 
-            return firebaseAuth.currentUser ?: throw Exception("Register failed")
+            if (!registerUser.isSuccessful) {
+                when (registerUser.code()) {
+                    400 -> throw Exception(string.getString(R.string.error_email_exist))
+                    else -> throw Exception(string.getString(R.string.error_default))
+                }
+            }
+
+            user.sendEmailVerification().await()
+            return firebaseAuth.currentUser ?: throw Exception(string.getString(R.string.error_default))
         } catch (e: Exception) {
             throw Exception(e.message)
         }
     }
 
-    // TODO: Implement Find Account with Username/Phone Number
-    suspend fun sendPasswordResetEmail(email: String) {
+    suspend fun sendPasswordResetEmail(id: String) {
+        var email = id
+
         try {
+            if (!isEmailValid(email)) {
+                val response = apiService.getUserEmail(id)
+                if (response.isSuccessful) {
+                    email = response.body()?.string()
+                        ?: throw Exception(string.getString(R.string.error_account_not_found))
+                } else {
+                    when (response.code()) {
+                        404 -> throw Exception(string.getString(R.string.error_account_not_found))
+                        else -> throw Exception(string.getString(R.string.error_default))
+                    }
+                }
+            }
+
             firebaseAuth.sendPasswordResetEmail(email).await()
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -92,12 +144,10 @@ class AuthRepository @Inject constructor(
         }
     }
 
-    suspend fun logout(): FirebaseUser {
+    suspend fun signout() {
         try {
             firebaseAuth.signOut()
             authPreferences.clearLoggedUser()
-
-            return firebaseAuth.currentUser ?: throw Exception("Logout failed")
         } catch (e: Exception) {
             throw Exception(e.message)
         }

@@ -44,17 +44,13 @@ android {
 }
 
 dependencies {
-    // CameraX
     implementation(libs.androidx.camera.core)
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view.v110)
-
-    // Dependency Injection
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
-
-    // AndroidX
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -69,30 +65,21 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
-
-    // Autentikasi
     implementation(libs.google.googleid)
-    implementation(libs.play.services.auth)
-
-    // Firebase
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.datastore.preferences)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.auth)
-
-    // Kotlin
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
-
-    // DataStore
-    implementation(libs.androidx.datastore.preferences)
-
-    // Lottie
-    implementation(libs.lottie)
-
-    // Pengujian
+    implementation(libs.play.services.auth)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.lottie)
 }
 
 kapt {

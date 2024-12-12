@@ -14,7 +14,7 @@
             android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/search"
+            android:hint="@string/search_book"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.search.SearchView

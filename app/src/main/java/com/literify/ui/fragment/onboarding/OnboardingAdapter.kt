@@ -1,23 +1,30 @@
 package com.literify.ui.fragment.onboarding
 
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Lifecycle
-import androidx.viewpager2.adapter.FragmentStateAdapter
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
+import com.literify.R
 
 class OnboardingAdapter(
-    list: ArrayList<Fragment>,
-    fm: FragmentManager,
-    lifecycle: Lifecycle
-) : FragmentStateAdapter(fm, lifecycle) {
+    private val context: Context,
+    private val lottieFiles: List<Int>
+) : RecyclerView.Adapter<OnboardingAdapter.OnboardingViewHolder>() {
 
-    private val fragmentList = list
-
-    override fun getItemCount(): Int {
-        return fragmentList.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnboardingViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.item_onboarding, parent, false)
+        return OnboardingViewHolder(view)
     }
 
-    override fun createFragment(position: Int): Fragment {
-       return fragmentList[position]
+    override fun onBindViewHolder(holder: OnboardingViewHolder, position: Int) {
+        holder.lottieAnimationView.setAnimation(lottieFiles[position])
+        holder.lottieAnimationView.playAnimation()    }
+
+    override fun getItemCount(): Int = lottieFiles.size
+
+    class OnboardingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val lottieAnimationView: LottieAnimationView = itemView.findViewById(R.id.lottieAnimationView)
     }
 }
