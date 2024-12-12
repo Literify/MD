@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
 
         when (mode) {
             "resetPassword" -> {
-                showLogoutDialog()
+                showLogoutDialog(deeplinkUri)
             }
             "verifyEmail" -> {
                 verifyEmail(oobCode)
@@ -130,7 +130,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // TODO: Implement the AlertDialog for logout according to ui/ux plan
-    private fun showLogoutDialog() {
+    private fun showLogoutDialog(deeplinkUri: Uri?) {
         logoutDialog = AlertDialog.Builder(this)
             .setTitle(getString(R.string.title_logout))
             .setMessage(getString(R.string.body_logout_msg))
@@ -141,6 +141,7 @@ class MainActivity : AppCompatActivity() {
 
                 val intent = Intent(this, AuthActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    data = deeplinkUri
                 }
                 startActivity(intent)
                 finish()

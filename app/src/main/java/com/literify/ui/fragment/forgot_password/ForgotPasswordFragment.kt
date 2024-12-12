@@ -69,14 +69,14 @@ class ForgotPasswordFragment : Fragment() {
                 is ResetPasswordState.Success -> {
                     showLoading(false)
 
-                    findNavController().navigateUp()
                     showError(state.message)
+                    findNavController().navigateUp()
                 }
                 is ResetPasswordState.Error -> {
                     showLoading(false)
 
-                    findNavController().navigateUp()
                     showError(state.errorMessage)
+                    findNavController().navigateUp()
                 }
             }
         }

@@ -189,11 +189,19 @@ class SignupFragment : Fragment() {
     }
 
     private fun showLoading(show: Boolean) {
-        binding.buttonSignup.apply {
-            isEnabled = !show
-            text = if (!show) getString(R.string.sign_up) else ""
+        binding.apply{
+            inputFirstName.isEnabled = !show
+            inputLastName.isEnabled = !show
+            inputEmail.isEnabled = !show
+            inputPassword.isEnabled = !show
+            inputConfirmPassword.isEnabled = !show
+
+            buttonSignup.apply {
+                isEnabled = !show
+                text = if (!show) getString(R.string.sign_up) else ""
+            }
+            progressSignup.visibility = if (show) View.VISIBLE else View.GONE
         }
-        binding.progressSignup.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     // TODO: Show error message according to ui/ux plan

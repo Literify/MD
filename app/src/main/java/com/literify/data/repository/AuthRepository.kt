@@ -26,7 +26,7 @@ class AuthRepository @Inject constructor(
             if (!isEmailValid(email)) {
                 val response = apiService.getUserEmail(id)
                 if (response.isSuccessful) {
-                    email = response.body()
+                    email = response.body()?.string()
                         ?: throw Exception(string.getString(R.string.error_account_mismatch))
                 } else {
                     when (response.code()) {
@@ -71,9 +71,10 @@ class AuthRepository @Inject constructor(
             authPreferences.setLoggedUser(email)
             authPreferences.saveCredential(email, password, null)
 
+            val user = firebaseAuth.currentUser!!
             val registerUser = apiService.registerUser(
                 UserPayload(
-                    id = firebaseAuth.currentUser!!.uid,
+                    id = user.uid,
                     email = email,
                     username = null,
                     firstName = firstName,
@@ -83,12 +84,13 @@ class AuthRepository @Inject constructor(
             )
 
             if (!registerUser.isSuccessful) {
-                throw Exception(string.getString(R.string.error_default))
+                when (registerUser.code()) {
+                    400 -> throw Exception(string.getString(R.string.error_email_exist))
+                    else -> throw Exception(string.getString(R.string.error_default))
+                }
             }
 
-            val user = firebaseAuth.currentUser!!
             user.sendEmailVerification().await()
-
             return firebaseAuth.currentUser ?: throw Exception(string.getString(R.string.error_default))
         } catch (e: Exception) {
             throw Exception(e.message)
@@ -102,7 +104,7 @@ class AuthRepository @Inject constructor(
             if (!isEmailValid(email)) {
                 val response = apiService.getUserEmail(id)
                 if (response.isSuccessful) {
-                    email = response.body()
+                    email = response.body()?.string()
                         ?: throw Exception(string.getString(R.string.error_account_not_found))
                 } else {
                     when (response.code()) {

@@ -234,6 +234,9 @@ class SigninFragment : Fragment() {
         }
 
         binding.apply {
+            inputId.isEnabled = false
+            inputPassword.isEnabled = false
+
             buttonSignin.isEnabled = false
             buttonSigninGoogle.isEnabled = false
             buttonForgotPassword.isEnabled = false

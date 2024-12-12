@@ -10,6 +10,7 @@ import com.literify.data.remote.model.StreakResponse
 import com.literify.data.remote.model.UserPayload
 import com.literify.data.remote.model.UserResponse
 import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -41,7 +42,7 @@ interface ApiService {
     @GET("user/{username}/email")
     suspend fun getUserEmail(
         @Path("username") id: String,
-    ): Response<String>
+    ): Response<ResponseBody>
 
     @PUT("user")
     suspend fun updateUser(
