@@ -20,7 +20,8 @@ class OnboardingAdapter(
 
     override fun onBindViewHolder(holder: OnboardingViewHolder, position: Int) {
         holder.lottieAnimationView.setAnimation(lottieFiles[position])
-        holder.lottieAnimationView.playAnimation()    }
+        holder.lottieAnimationView.playAnimation()
+    }
 
     override fun getItemCount(): Int = lottieFiles.size
 

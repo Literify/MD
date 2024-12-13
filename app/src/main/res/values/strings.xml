@@ -13,6 +13,13 @@
     <string name="profile">Profil</string>
     <string name="email">Email</string>
     <string name="notification">Notifikasi</string>
+    <string name="label">Label</string>
+    <string name="username">Nama Pengguna</string>
+    <string name="save">Simpan</string>
+    <string name="authors">Pengarang</string>
+    <string name="description">Deskripsi</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
 
     <string name="sign_in">Masuk</string>
     <string name="sign_up">Registrasi</string>
@@ -24,7 +31,15 @@
     <string name="sign_in_with_google">Masuk dengan Google</string>
     <string name="sign_up_with_google">Daftar dengan Google</string>
     <string name="sign_out">Keluar</string>
+    <string name="zero_percent">0%</string>
     <string name="search_book">Cari Buku</string>
+    <string name="similiar_book">Buku yang serupa</string>
+    <string name="buy_this_book">Beli buku ini</string>
+    <string name="add_to_library">Tambahkan ke koleksi</string>
+    <string name="published_date">Tanggal Terbit</string>
+    <string name="my_library">Perpustakaan Saya</string>
+    <string name="book_detail">Detail Buku</string>
+    <string name="scan_book">Pindai buku</string>
 
     <string name="error_default">Terjadi kesalahan, coba lagi nanti</string>
     <string name="error_account_mismatch">ID atau kata sandi Anda tidak cocok. Silakan coba lag</string>
@@ -51,7 +66,6 @@
     <string name="title_your_personalized">Personalisasi Anda</string>
     <string name="title_most_reading">Paling Banyak Dibaca Bulan Ini</string>
     <string name="title_most_authors">Penulis Terbanyak Bulan Ini</string>
-    <string name="title_logout">Konfirmasi keluar</string>
 
     <string name="body_onboarding_1">Literify, aplikasi untuk menemukan buku dan mendapatkan rekomendasi yang tepat sesuai kebutuhan Anda.</string>
     <string name="body_onboarding_2">Temukan buku yang sesuai dengan minat Anda</string>
@@ -64,7 +78,9 @@
     <string name="body_find_account_msg">Masukkan nama pengguna atau email Anda</string>
     <string name="body_reset_password_msg">Kami akan mengirimkan tautan ke email Anda untuk mereset kata sandi Anda</string>
     <string name="body_create_password_msg">Buat kata sandi 8+ karakter dengan setidaknya 1 huruf besar, 1 huruf kecil, dan 1 angka</string>
-    <string name="body_logout_msg">Anda harus keluar untuk melanjutkan reset password. Apakah Anda ingin keluar sekarang?</string>
+    <string name="body_logout_resetpw">Anda harus keluar untuk melanjutkan reset password. Apakah Anda ingin keluar sekarang?</string>
     <string name="body_from_your_goals">Dari Sasaranmu</string>
+    <string name="body_keep_reading">Teruslah Membaca Hari Ini!</string>
     <string name="body_most_genre">Genre yang Paling Sering Dibaca</string>
+    <string name="body_signout">Apakah kamu yakin ingin keluar?</string>
 </resources>

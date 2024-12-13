@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingBottom="78dp"
     tools:context=".ui.fragment.home.HomeFragment" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,9 +35,9 @@
             android:fontFamily="@font/inter_semibold"
             android:textColor="@color/black"
             android:textSize="36sp"
+            android:text="@string/body_keep_reading"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_welcome"
-            tools:text="Keep Reading Today!" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_welcome" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
@@ -50,36 +52,43 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_motivation">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:padding="16dp">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_progress_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:fontFamily="@font/inter_bold"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:text="@string/zero_percent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/tv_progress_percentage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_bold"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        tools:text="0%" />
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter"
+                    android:text="@string/body_from_your_goals"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_progress_percentage" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter"
-                        android:textSize="12sp"
-                        android:text="@string/body_from_your_goals" />
-                </LinearLayout>
-            </LinearLayout>
+                <ImageView
+                    android:id="@+id/img_badge"
+                    android:layout_width="51dp"
+                    android:layout_height="51dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/avatars" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -96,20 +105,23 @@
             app:layout_constraintTop_toBottomOf="@+id/materialCardView">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="395dp"
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp">
+                android:padding="16dp"
+                android:background="@color/primary_main"
+                app:layout_constraintTop_toTopOf="@+id/materialCardView2">
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_medium"
+                    android:text="@string/body_most_genre"
                     android:textColor="@color/bg_1"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/body_most_genre" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -119,13 +131,61 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView">
 
-                    <include layout="@layout/item_label" />
+                    <TextView
+                        android:id="@+id/tv_genre_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_button_rounded"
+                        android:fontFamily="@font/inter_light"
+                        android:paddingStart="8dp"
+                        android:paddingTop="1dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="1dp"
+                        android:text="@string/label"
+                        android:textColor="@android:color/black"
+                        android:textSize="11sp" />
 
-                    <include layout="@layout/item_label" />
+                    <TextView
+                        android:id="@+id/tv_genre_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_button_rounded"
+                        android:fontFamily="@font/inter_light"
+                        android:paddingStart="8dp"
+                        android:paddingTop="1dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="1dp"
+                        android:text="@string/label"
+                        android:textColor="@android:color/black"
+                        android:textSize="11sp" />
 
-                    <include layout="@layout/item_label" />
+                    <TextView
+                        android:id="@+id/tv_genre_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_button_rounded"
+                        android:fontFamily="@font/inter_light"
+                        android:paddingStart="8dp"
+                        android:paddingTop="1dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="1dp"
+                        android:text="@string/label"
+                        android:textColor="@android:color/black"
+                        android:textSize="11sp" />
 
-                    <include layout="@layout/item_label" />
+                    <TextView
+                        android:id="@+id/tv_genre_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_button_rounded"
+                        android:fontFamily="@font/inter_light"
+                        android:paddingStart="8dp"
+                        android:paddingTop="1dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="1dp"
+                        android:text="@string/label"
+                        android:textColor="@android:color/black"
+                        android:textSize="11sp" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -145,20 +205,19 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/inter_semibold"
-                android:textColor="@color/black"
-                android:textSize="20sp"
                 android:text="@string/title_your_personalized"
-                />
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_personalized"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                tools:listitem="@layout/item_rv2"
+                tools:clipToPadding="false"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:orientation="horizontal"
-                tools:clipToPadding="false" />
+                tools:listitem="@layout/item_rv2"
+                tools:orientation="horizontal" />
         </LinearLayout>
 
         <LinearLayout

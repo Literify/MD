@@ -219,6 +219,9 @@ class SigninFragment : Fragment() {
     private fun showLoading(show: Boolean, button: String? = null) {
         if (!show) {
             binding.apply {
+                inputId.isEnabled = true
+                inputPassword.isEnabled = true
+
                 buttonSignin.isEnabled = true
                 buttonSignin.text = getString(R.string.sign_in)
 

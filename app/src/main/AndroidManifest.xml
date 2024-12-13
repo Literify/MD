@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name=".LiterifyApp"
         android:allowBackup="true"
@@ -26,6 +30,21 @@
 
             <nav-graph android:value="@navigation/mobile_navigation" />
         </activity>
+
+        <activity
+            android:name=".ui.activity.camera.CameraActivity"
+            android:theme="@style/Theme.Literify"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activity.book_detail.BookDetailActivity"
+            android:theme="@style/Theme.Literify"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activity.edit_profile.EditProfileActivity"
+            android:theme="@style/Theme.Literify"
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

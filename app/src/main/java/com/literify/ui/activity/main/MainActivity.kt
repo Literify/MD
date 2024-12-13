@@ -132,8 +132,8 @@ class MainActivity : AppCompatActivity() {
     // TODO: Implement the AlertDialog for logout according to ui/ux plan
     private fun showLogoutDialog(deeplinkUri: Uri?) {
         logoutDialog = AlertDialog.Builder(this)
-            .setTitle(getString(R.string.title_logout))
-            .setMessage(getString(R.string.body_logout_msg))
+            .setTitle(getString(R.string.body_signout))
+            .setMessage(getString(R.string.body_logout_resetpw))
             .setPositiveButton(getString(R.string.sign_out)) { _, _ ->
                 lifecycleScope.launch {
                     authRepository.signout()
