@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.common.util.concurrent.ListenableFuture
+import com.literify.R
 import com.literify.databinding.ActivityCameraBinding
 import java.io.File
 import java.util.concurrent.ExecutorService
@@ -45,6 +46,10 @@ class CameraActivity : AppCompatActivity() {
         } else {
             startCamera()
         }
+
+
+        binding.pbCamera.setAnimation(R.raw.ic_loading)
+        binding.pbCamera.playAnimation()
 
         binding.btnCapture.setOnClickListener {
             captureImage()

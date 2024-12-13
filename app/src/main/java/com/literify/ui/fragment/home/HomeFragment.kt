@@ -63,6 +63,8 @@ class HomeFragment : Fragment() {
         val booksAdapter = Rv1Adapter(false) { id ->
             val intent = Intent(context, BookDetailActivity::class.java)
             intent.putExtra(BookDetailActivity.EXTRA_BOOK_ID, id)
+
+            startActivity(intent)
         }
         booksAdapter.submitList(rv1Dummy)
 

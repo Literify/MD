@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.literify.R
 import com.literify.databinding.FragmentExploreBinding
 import com.literify.ui.activity.book_detail.BookDetailActivity
 import com.literify.ui.activity.book_detail.BookDetailActivity.Companion.EXTRA_BOOK_ID
+import com.literify.ui.activity.camera.CameraActivity
 import com.literify.ui.adapter.Rv1Adapter
 import com.literify.ui.adapter.Rv2Adapter
 import com.literify.util.DummyData
@@ -36,6 +38,18 @@ class ExploreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // TODO: Implement fetch genre data
+        binding.searchBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.search -> {
+                    val intent = Intent(context, CameraActivity::class.java)
+                    startActivity(intent)
+
+                    true
+                }
+
+                else -> false
+            }
+        }
 
         showDummyData()
     }

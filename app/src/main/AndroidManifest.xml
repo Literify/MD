@@ -33,10 +33,17 @@
 
         <activity
             android:name=".ui.activity.camera.CameraActivity"
+            android:theme="@style/Theme.Literify"
             android:exported="false" />
 
         <activity
             android:name=".ui.activity.book_detail.BookDetailActivity"
+            android:theme="@style/Theme.Literify"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activity.edit_profile.EditProfileActivity"
+            android:theme="@style/Theme.Literify"
             android:exported="false" />
 
         <meta-data
